@@ -416,7 +416,8 @@ class ProductosController extends Controller
 
     public function updateingreso(Request $request){
 
-        $ingresosd = IngresosDetalle::find($request->id);
+
+        $ingresosd = IngresosDetalle::find($request->ingreso);
         $ingresosd->cantidad =$request->cantidad;
         $ingresosd->precio =$request->precio;
         $ingresosd->vence =$request->vence;
@@ -430,7 +431,7 @@ class ProductosController extends Controller
         $productosalmacen->vence =$request->vence;
         $res = $productosalmacen->update();
 
-        return back();
+        return redirect()->action('ProductosController@ingproductos');
 
         //ProductosAlmacen
 

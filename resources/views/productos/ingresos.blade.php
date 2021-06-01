@@ -136,6 +136,11 @@
                     <td>{{$i->created_at}}</td>
                     <td>
                     @if(Auth::user()->rol == 1)
+                    <a class="btn btn-primary btn-sm" href="ingresop-edit-{{$i->id}}">
+                              <i class="fas fa-edit">
+                              </i>
+                              Editar
+                          </a>
                         @if($i->estatus == 1)
                           <a class="btn btn-danger btn-sm" href="ingreso-reversar-{{$i->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
                               <i class="fas fa-backward">
