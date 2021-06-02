@@ -82,7 +82,7 @@
                
                       <form method="get" action="requerimientos1">					
 
-                    <div class="row">
+                      <div class="row">
                   <div class="col-md-3">
                     <label for="exampleInputEmail1">Inicio</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
@@ -108,6 +108,7 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+
 
                   
                 

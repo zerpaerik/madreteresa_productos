@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
@@ -24,6 +27,8 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- DataTables -->
@@ -68,48 +73,57 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content">   
+    @include('flash-message')
+
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-                <a class="btn btn-primary btn-sm" href="{{route('requerimientos.create')}}">
+              <a class="btn btn-primary btn-sm" href="{{route('requerimientos.create')}}">
                               <i class="fas fa-folder">
                               </i>
                               Agregar
                           </a>
-                          <form method="get" action="requerimientos">					
-                  <label for="exampleInputEmail1">Filtros de Busqueda</label>
+               
+                      <form method="get" action="requerimientos">			
+                      <label for="exampleInputEmail1">Filtros de Busqueda</label>
 
-                    <div class="row">
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha Inicio</label>
-                    <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
-                  </div>
+                      <div class="row">
+                      <div class="col-md-3">
+                      <label for="exampleInputEmail1">Fecha Inicio</label>
+                      <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
+                      </div>
 
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha Fin</label>
-                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni" onsubmit="datapac()">
-                  </div>
+                      <div class="col-md-3">
+                      <label for="exampleInputEmail1">Fecha Fin</label>
+                      <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni" onsubmit="datapac()">
+                      </div>
 
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Almacen</label>
-                    <select class="form-control" name="solicita">
-                    <option value="2">Recepción</option>
-                    <option value="3">Obstetra</option>
-                    <option value="4">Rayos X</option>
-                    <option value="11">Laboratorio</option>
-                    <option value="7">Canto Rey</option>
-                    <option value="8">Vida Feliz</option>
-                    <option value="9">Zarate</option>
-                    </select>                  
-                    </div>
+                      <div class="col-md-3">
+                      <label for="exampleInputEmail1">Almacen</label>
+                      <select class="form-control" name="solicita">
+                      <option value="2">Recepción</option>
+                      <option value="3">Obstetra</option>
+                      <option value="4">Rayos X</option>
+                      <option value="11">Laboratorio</option>
+                      <option value="7">Canto Rey</option>
+                      <option value="8">Vida Feliz</option>
+                      <option value="9">Zarate</option>
+                      </select>                  
+                      </div>
+
+
+
+                      <div class="col-md-2" style="margin-top: 30px;">
+                      <button type="submit" class="btn btn-primary">Buscar</button>
+
+                      </div>		
+
+                   
+
                   
                 
                  
-                  <div class="col-md-2" style="margin-top: 30px;">
-                  <button type="submit" class="btn btn-primary">Buscar</button>
-
-                  </div>
                   </form>
               </div>
               <!-- /.card-header -->
@@ -196,46 +210,7 @@
     <!-- /.content -->
   </div>
   </div>
-
-  <div class="modal fade" id="viewTicket">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-           
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-
-   
   </section>
-  
-<script type="text/javascript">
-		function view(e){
-		    var id = $(e).attr('id');
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/tickets/view/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
 
   <!-- /.content-wrapper -->
   
@@ -287,69 +262,39 @@
 <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
-<style type="text/css">
-		.modal-backdrop.in {
-		    filter: alpha(opacity=50);
-		    opacity: 0;
-		    z-index: 0;
-		}
+<script>
 
-		.modal {
-			top:35px;
-		}
-</style>
-<script type="text/javascript">
-		function view(e){
-		    var id = $(e).attr('id');
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/tickets/view/"+id,
-            console.log(id);
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>
 
-		function eliminar(e) {
-			var id = $(e).attr('id');
-			var r = confirm("Seguro que deseas eliminar este material!");
-			if (r) {
-				//$(e).parent('div').hide('slow');
-				$.ajax({
-		        type: "GET",
-			        url: "/servicio/material_eliminar/"+id,
-			        success: function (data) {
-			        	if (data == 1) {
-			        		$(e).parent('div').hide('slow');
-			            	toastr.success('El materia ha sido eliminado.', 'Servicios!');
-			        	} else {
-			        		toastr.error('El material no pudo ser eliminado.', 'Servicios!')
-			        	}
-			        },
-			        error: function (data) {
-			            toastr.error('Se genero un problema al momento de realizar el proceso de eliminación.', 'Servicios!')
-			        }
-			    });
-			}
-			
-		}
-	</script>
 <script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true,
       "autoWidth": false,
+      dom: 'Bfrtip',
+      buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
     });
     $('#example2').DataTable({
       "paging": true,
