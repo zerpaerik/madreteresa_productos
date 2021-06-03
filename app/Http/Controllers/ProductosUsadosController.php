@@ -29,6 +29,7 @@ class ProductosUsadosController extends Controller
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
         ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
         $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
@@ -51,6 +52,7 @@ class ProductosUsadosController extends Controller
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
         ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
         $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])

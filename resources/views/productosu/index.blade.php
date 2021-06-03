@@ -91,10 +91,26 @@
                     <label for="exampleInputEmail1">Fin</label>
                     <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
                   </div>
-                  <div class="col-md-2" style="margin-top: 30px;">
+                 
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Almacen</label>
+                    <select class="form-control" name="almacen">
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    </select>                  
+                    </div>
+                    <div class="col-md-2" style="margin-top: 30px;">
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+                  </div>
+                  <div class="row">
+
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Items</label>
                     <input type="text" disabled class="form-control" value="{{$soli->item}}" >
@@ -103,9 +119,7 @@
                     <label for="exampleInputEmail1">Cantidad</label>
                     <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                   </div>
-                
-                 
-                  
+                  </div>
                   </form>
               </div>
               <!-- /.card-header -->
