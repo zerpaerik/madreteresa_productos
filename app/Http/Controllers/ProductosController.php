@@ -453,6 +453,35 @@ class ProductosController extends Controller
         return view('productos.detalle_ingresos', compact('ingreso','detalle'));
     }
 
+    public function descargar($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+        return view('productos.descargar', compact('productos'));
+    }
+
+    public function descargarPost(Request $request)
+    {
+
+
+                $pr = ProductosAlmacen::where('id','=',$request->id)->first();
+
+                $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
+                $ingresosd->cantidad = $pr->cantidad - $request->cant;
+                $res = $ingresosd->update();
+
+            
+
+                return back();
+            }
+
     public function reversar($id)
     {
 

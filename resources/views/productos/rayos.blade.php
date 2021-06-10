@@ -121,6 +121,12 @@
                               Crear Requerimiento
                           </a>
 
+                          <a class="btn btn-danger btn-sm" id="{{$i->id}}" onclick="view(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Descargar
+                          </a>
+
                           @endif
                           </td>
                   </tr>
@@ -155,32 +161,22 @@
       </div>
       <!-- /.container-fluid -->
 
-      <div class="modal fade" id="myModal">
+      <div class="modal fade" id="viewTicket">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Detalle de Ingreso de Productos</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
+           
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-
-     
-    </section>
-    <!-- /.content -->
-  </div>
-  </div>
   </section>
 
   <!-- /.content-wrapper -->
@@ -197,24 +193,24 @@
 <script src="plugins/jquery/jquery.min.js"></script>
 
 <script type="text/javascript">
+		function view(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
 
-function view(e){
-        var id = $(e).attr('data-id');
-        
-        $.ajax({
-            type: "GET",
-            url: "ingresos/view/"+id,
-            success: function (data) {
-                $(".modal-body").html(data);
-                $('#myModal').modal('show');
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
-    };
-
-</script>
+	
+	</script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
