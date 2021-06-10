@@ -225,6 +225,8 @@ Route::post('report/general', 'ReportesController@reportg');
 
 Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('recepcion', 'ProductosController@recepcion')->name('productos.recepcion');
+Route::get('productos/descargar/{id}', 'ProductosController@descargar');
+Route::post('productos/descargar', 'ProductosController@descargarPost');
 Route::get('obstetra', 'ProductosController@obstetra')->name('productos.obstetra');
 Route::get('rayos', 'ProductosController@rayos')->name('productos.rayos');
 Route::get('laboratorio-almacen', 'ProductosController@laboratorio')->name('productos.laboratorio');

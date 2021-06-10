@@ -127,14 +127,17 @@
           Crear Requerimiento
       </a>
 
-      
+   
+
+      @endif
+         
       <a class="btn btn-danger btn-sm" id="{{$i->id}}" onclick="view(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Descargar
                           </a>
-
-      @endif</td>
+      
+      </td>
                   </tr>
                   @endforeach
                  
