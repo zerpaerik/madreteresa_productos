@@ -131,16 +131,7 @@
                     <label for="exampleInputEmail1">Cantidad</label>
                     <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                   </div>
-                  @if($prod != '0')
-
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Monto en Soles</label>
-                    <input type="text" disabled class="form-control" value="{{$prod->precio * $soli->cant}}">
-                  </div>
-
-                
-
-                  @endif
+              
 
                   </div>
 
