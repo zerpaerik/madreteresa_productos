@@ -107,25 +107,43 @@ class RequerimientosController extends Controller
         ->where('a.almacen','=',1)
         ->get();  
 
-        if($request->inicio && is_null($request->producto)){
+        if ($request->inicio && is_null($request->producto)) {
             $f1 = $request->inicio;
             $f2 = $request->fin;
 
-
-        $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
-        ->join('users as b','b.id','a.usuario')
-        ->join('productos as p','p.id','a.producto')
-        ->whereBetween('a.created_at', [$f1, $f2])
-        ->where('a.almacen_solicita', '=', $request->solicita)
-        ->where('a.estatus', '=', 2)
-        ->get(); 
-
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
-        ->where('almacen_solicita','=',$request->solicita)
+            if ($request->solicita == '99') {
+                $requerimientos = DB::table('requerimientos as a')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+            ->join('users as b', 'b.id', 'a.usuario')
+            ->join('productos as p', 'p.id', 'a.producto')
+            ->whereBetween('a.created_at', [$f1, $f2])
+            ->where('a.estatus', '=', 2)
+            ->get();
+            } else {
+                $requerimientos = DB::table('requerimientos as a')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+            ->join('users as b', 'b.id', 'a.usuario')
+            ->join('productos as p', 'p.id', 'a.producto')
+            ->whereBetween('a.created_at', [$f1, $f2])
+            ->where('a.almacen_solicita', '=', $request->solicita)
+            ->where('a.estatus', '=', 2)
+            ->get();
+            }
+        
+            if ($request->solicita == '99') {
+            
+            $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
         ->where('estatus', '=', 2)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
         ->first();
+        } else {
+            $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+            ->where('almacen_solicita', '=', $request->solicita)
+            ->where('estatus', '=', 2)
+            ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+            ->first();
+
+        }
 
         if ($soli->item == 0) {
         $soli->cant = 0;
@@ -144,23 +162,40 @@ class RequerimientosController extends Controller
                 $f1 = $request->inicio;
                 $f2 = $request->fin;
 
-
-        $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
-        ->join('users as b','b.id','a.usuario')
-        ->join('productos as p','p.id','a.producto')
+                if ($request->solicita == '99') {
+                    $requerimientos = DB::table('requerimientos as a')
+        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+        ->join('users as b', 'b.id', 'a.usuario')
+        ->join('productos as p', 'p.id', 'a.producto')
         ->whereBetween('a.created_at', [$f1, $f2])
-        ->where('a.almacen_solicita', '=', $request->solicita)
         ->where('a.producto', '=', $request->producto)
         ->where('a.estatus', '=', 2)
-        ->get(); 
+        ->get();
 
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
-        ->where('almacen_solicita','=',$request->solicita)
-        ->where('estatus', '=', 2)
-        ->where('producto', '=', $request->producto)
-        ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
-        ->first();
+                    $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                ->where('estatus', '=', 2)
+                ->where('producto', '=', $request->producto)
+                ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                ->first();
+                } else {
+                    $requerimientos = DB::table('requerimientos as a')
+                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+                    ->join('users as b', 'b.id', 'a.usuario')
+                    ->join('productos as p', 'p.id', 'a.producto')
+                    ->whereBetween('a.created_at', [$f1, $f2])
+                    ->where('a.almacen_solicita', '=', $request->solicita)
+                    ->where('a.producto', '=', $request->producto)
+                    ->where('a.estatus', '=', 2)
+                    ->get();
+            
+                                $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                            ->where('almacen_solicita', '=', $request->solicita)
+                            ->where('estatus', '=', 2)
+                            ->where('producto', '=', $request->producto)
+                            ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                            ->first();
+
+                }
 
         $prod = ProductosAlmacen::where('producto','=',$request->producto )
         ->where('almacen','=',$request->solicita)
@@ -177,6 +212,8 @@ class RequerimientosController extends Controller
       } else {
         $f1 = date('Y-m-d');
         $f2 = date('Y-m-d');
+
+        
 
         $requerimientos = DB::table('requerimientos as a')
         ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
