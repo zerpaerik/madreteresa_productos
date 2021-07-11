@@ -468,6 +468,20 @@ class ProductosController extends Controller
         return view('productos.descargar', compact('productos'));
     }
 
+    public function editc($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+        return view('productos.editc', compact('productos'));
+    }
+
     public function descargarPost(Request $request)
     {
 
@@ -488,6 +502,23 @@ class ProductosController extends Controller
                 $lab->usuario =  Auth::user()->id;
                 $lab->save();
 
+
+            
+
+                return back();
+            }
+
+            public function editcP(Request $request)
+    {
+
+
+
+                $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
+                $ingresosd->cantidad = $request->cantidad;
+                $res = $ingresosd->update();
+
+
+              
 
             
 

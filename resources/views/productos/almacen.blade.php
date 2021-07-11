@@ -113,6 +113,11 @@
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
                     <td>
+                    <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Editar Cantidad
+                          </a>
                     <a class="btn btn-danger btn-sm" id="{{$i->id}}" onclick="view(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -200,6 +205,27 @@
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+		function view1(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/editc/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
 
 
 

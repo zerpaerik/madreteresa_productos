@@ -118,6 +118,12 @@
                     <td>{{$i->vence}}</td>
                     <td>
 
+                    <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Editar Cantidad
+                          </a>
+
                     @if($i->cantidad < $i->minimol)
 
 
@@ -260,6 +266,26 @@
 		    $.ajax({
 		        type: "GET",
 		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function view1(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/editc/"+id,
 		        success: function (data) {
 		            $("#viewTicket .modal-body").html(data);
 		            $('#viewTicket').modal('show');
