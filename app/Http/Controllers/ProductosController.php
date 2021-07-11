@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Productos;
 use App\ProductMov;
 use App\ProductosAlmacen;
+use App\ProductosUsados;
 use App\UnidadMedida;
 use App\Ingresos;
 use App\User;
@@ -473,9 +474,20 @@ class ProductosController extends Controller
 
                 $pr = ProductosAlmacen::where('id','=',$request->id)->first();
 
+
                 $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
                 $ingresosd->cantidad = $pr->cantidad - $request->cant;
                 $res = $ingresosd->update();
+
+
+                $lab = new ProductosUsados();
+                $lab->producto =  $pr->producto;
+                $lab->cantidad =  $request->cant;
+                $lab->fecha =  $request->fecha;
+                $lab->almacen =  $request->almacen;
+                $lab->usuario =  Auth::user()->id;
+                $lab->save();
+
 
             
 

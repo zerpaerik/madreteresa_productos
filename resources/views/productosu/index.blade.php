@@ -127,9 +127,10 @@
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Producto</th>
+                  <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Registrado Por</th>
@@ -143,6 +144,7 @@
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
                     <td>{{$an->cantidad}}</td>
+                    <td>{{$an->fecha}}</td>
                     @if($an->almacen == 2)
                     <td>Recepción</td>
                     @elseif($an->almacen == 3)
@@ -182,9 +184,10 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>
+                    <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
                     <th>Registrado Por</th>

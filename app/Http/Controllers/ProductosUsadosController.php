@@ -25,14 +25,14 @@ class ProductosUsadosController extends Controller
             $f2 = $request->fin;
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
-        ->whereBetween('a.created_at', [$f1, $f2])
+        ->whereBetween('a.fecha', [$f1, $f2])
         ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
-        $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
+        $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant'))
         ->first();
 
@@ -48,14 +48,14 @@ class ProductosUsadosController extends Controller
         $f2 = date('Y-m-d');
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
-        ->whereBetween('a.created_at', [$f1, $f2])
+        ->whereBetween('a.fecha', [$f1, $f2])
         ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
-        $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
+        $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant'))
         ->first();
 
@@ -88,14 +88,14 @@ class ProductosUsadosController extends Controller
             $f2 = $request->fin;
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
-        ->whereBetween('a.created_at', [$f1, $f2])
+        ->whereBetween('a.fecha', [$f1, $f2])
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
-        $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
+        $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant'))
         ->first();
@@ -112,14 +112,14 @@ class ProductosUsadosController extends Controller
         $f2 = date('Y-m-d');
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
-        ->whereBetween('a.created_at', [$f1, $f2])
+        ->whereBetween('a.fecha', [$f1, $f2])
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
-        $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
+        $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant'))
         ->first();
