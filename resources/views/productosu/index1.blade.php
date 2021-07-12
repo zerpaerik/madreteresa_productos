@@ -103,6 +103,10 @@
                             <label for="exampleInputEmail1">Cantidad</label>
                             <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                             </div>
+                            <div class="col-md-2">
+                              <label for="exampleInputEmail1">Precio Total</label>
+                              <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                            </div>
 
 
 
@@ -117,6 +121,7 @@
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
@@ -131,6 +136,7 @@
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
                     <td>{{$an->cantidad}}</td>
+                    <td>{{$an->precio}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 7)
                     <td>Canto Rey</td>
@@ -174,6 +180,7 @@
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>

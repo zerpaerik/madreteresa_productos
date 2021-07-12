@@ -498,6 +498,7 @@ class ProductosController extends Controller
                 $lab->producto =  $pr->producto;
                 $lab->cantidad =  $request->cant;
                 $lab->fecha =  $request->fecha;
+                $lab->precio =  $pr->precio;
                 $lab->almacen =  $request->almacen;
                 $lab->usuario =  Auth::user()->id;
                 $lab->save();
