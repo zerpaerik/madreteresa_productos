@@ -91,6 +91,7 @@
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
+                    <th>Total Soles.</th>
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
@@ -109,6 +110,7 @@
                     <td>{{$i->cantidad}}</td>
                     @endif
                     <td>{{$i->precio}}</td>
+                    <td>{{$i->precio * $i->cantidad}}</td>
                     <td>{{$i->categoria}}</td>
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
@@ -149,10 +151,11 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>
+                    <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
+                    <th>Total Soles.</th>
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
