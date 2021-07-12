@@ -113,11 +113,15 @@
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
                     <td>
+                    @if(Auth::user()->rol == 1)
+
+
                     <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Editar Cantidad
                           </a>
+                          @endif
                     <a class="btn btn-danger btn-sm" id="{{$i->id}}" onclick="view(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
