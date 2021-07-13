@@ -9,6 +9,8 @@ use App\ProductosUsados;
 use App\UnidadMedida;
 use App\Ingresos;
 use App\User;
+use App\Req;
+use App\Requerimientos;
 use App\IngresosDetalle;
 use Illuminate\Http\Request;
 use DB;
@@ -482,6 +484,20 @@ class ProductosController extends Controller
         return view('productos.editc', compact('productos'));
     }
 
+    public function requerimiento($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+
+        return view('productos.requerimiento', compact('productos'));
+    }
+
     public function descargarPost(Request $request)
     {
 
@@ -524,6 +540,33 @@ class ProductosController extends Controller
             
 
                 return back();
+            }
+
+            public function reqPost(Request $request)
+            {
+
+                $almacen = ProductosAlmacen::where('id','=',$request->id)->first();
+
+    
+                $req1 = new Req();
+                $req1->save();
+
+                $req = new Requerimientos();
+                $req->producto =  $almacen->producto;
+                $req->cantidad_solicita =  $request->cantidad;
+                $req->almacen_solicita =  $request->almacen;
+                $req->usuario =  Auth::user()->id;
+                $req->req =  $req1->id;
+                $req->sede =  $request->session()->get('sede');
+                $req->save();
+        
+        
+        
+        
+                
+                
+                return back();
+        
             }
 
     public function reversar($id)

@@ -132,7 +132,7 @@
                     @if($i->cantidad < $i->minimol)
 
 
-<a class="btn btn-success btn-sm" href="requerimientos-create-almacen-{{$i->almacen}}">
+                    <a class="btn btn-success btn-sm"  id="{{$i->id}}" onclick="viewr(this)">
           <i class="fas fa-pencil-alt">
           </i>
           Crear Requerimiento
@@ -243,6 +243,27 @@
 		    $.ajax({
 		        type: "GET",
 		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewr(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/requerimiento/"+id,
 		        success: function (data) {
 		            $("#viewTicket .modal-body").html(data);
 		            $('#viewTicket').modal('show');
