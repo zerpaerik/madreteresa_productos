@@ -114,6 +114,11 @@
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
                     <td>
+                    <a class="btn btn-success btn-sm" id="{{$i->id}}" onclick="viewh(this)">
+                              <i class="fas fa-eye">
+                              </i>
+                              Historial
+                          </a>
 
                     @if(Auth::user()->rol == 1)
 
@@ -310,6 +315,27 @@
 		    $.ajax({
 		        type: "GET",
 		        url: "/productos/requerimiento/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewh(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/historial/"+id,
 		        success: function (data) {
 		            $("#viewTicket .modal-body").html(data);
 		            $('#viewTicket').modal('show');

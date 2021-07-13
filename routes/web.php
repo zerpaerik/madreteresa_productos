@@ -226,6 +226,7 @@ Route::post('report/general', 'ReportesController@reportg');
 Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('recepcion', 'ProductosController@recepcion')->name('productos.recepcion');
 Route::get('productos/descargar/{id}', 'ProductosController@descargar');
+Route::get('productos/historial/{id}', 'ProductosController@historial');
 Route::get('productos/editc/{id}', 'ProductosController@editc');
 Route::get('productos/requerimiento/{id}', 'ProductosController@requerimiento');
 Route::post('productos/descargar', 'ProductosController@descargarPost');

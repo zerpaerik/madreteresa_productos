@@ -11,6 +11,7 @@ use App\Ingresos;
 use App\User;
 use App\Req;
 use App\Requerimientos;
+use App\MovimientoProductos;
 use App\IngresosDetalle;
 use Illuminate\Http\Request;
 use DB;
@@ -297,6 +298,14 @@ class ProductosController extends Controller
                 $pa->almacen = 1;
                 $pa->save();
 
+                
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pa->id;
+                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                $mp->save();
+
                 } else {
 
                 $pa = ProductosAlmacen::where('producto','=',$laboratorio['laboratorio'])->where('almacen','=',1)->first();
@@ -304,6 +313,13 @@ class ProductosController extends Controller
                // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
                 //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
                 $res = $pa->update();
+
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pa->id;
+                $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                $mp->save();
                     
                 }
 
@@ -323,6 +339,13 @@ class ProductosController extends Controller
                     $pa->usuario = Auth::user()->id;
                     $pa->almacen = 1;
                     $pa->save();
+
+                    $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pa->id;
+                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                    $mp->save();
     
                     } else {
     
@@ -331,6 +354,13 @@ class ProductosController extends Controller
                    // $pa->precio =  $request->precio_abol['laboratorios'][$key]['precio'] / $request->monto_abol['laboratorios'][$key]['abono'];
                     //$pa->vence =  $request->fecha_vence['laboratorios'][$key]['vence'];
                     $res = $pa->update();
+
+                    $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pa->id;
+                    $mp->cantidad = $request->monto_abol['laboratorios'][$key]['abono'];
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'INGRESO A ALMACEN CENTRAL';
+                    $mp->save();
                         
                     }
 
@@ -498,6 +528,27 @@ class ProductosController extends Controller
         return view('productos.requerimiento', compact('productos'));
     }
 
+    public function historial($id)
+    {
+
+        
+        $productos = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen')
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.id','=',$id)
+        ->first(); 
+
+        $historial = DB::table('movimiento_productos as a')
+        ->select('a.id','a.id_producto_almacen','a.cantidad','a.accion','a.usuario','us.name','a.created_at')
+        ->join('productos_almacen as u','u.id','a.id_producto_almacen')
+        ->join('users as us','us.id','a.usuario')
+        ->where('a.id_producto_almacen','=',$id)
+        ->get(); 
+
+
+        return view('productos.movimientos', compact('productos','historial'));
+    }
+
     public function descargarPost(Request $request)
     {
 
@@ -508,6 +559,16 @@ class ProductosController extends Controller
                 $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
                 $ingresosd->cantidad = $pr->cantidad - $request->cant;
                 $res = $ingresosd->update();
+
+                
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $ingresosd->id;
+            $mp->cantidad = $request->cant;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESCARGA DE ALMACEN';
+            $mp->save();
+
+                
 
 
                 $lab = new ProductosUsados();
@@ -533,6 +594,13 @@ class ProductosController extends Controller
                 $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
                 $ingresosd->cantidad = $request->cantidad;
                 $res = $ingresosd->update();
+
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $ingresosd->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'EDICIÓN DE CANTIDAD';
+                $mp->save();
 
 
               

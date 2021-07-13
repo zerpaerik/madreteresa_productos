@@ -5,6 +5,7 @@ use App\Equipos;
 use App\Requerimientos;
 use App\Req;
 use App\ProductosAlmacen;
+use App\MovimientoProductos;
 use App\Clientes;
 use App\Productos;
 use App\User;
@@ -534,6 +535,14 @@ class RequerimientosController extends Controller
             $pa->almacen = $req->almacen_solicita;
             $pa->save();
 
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pa->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->save();
+
             } else {
 
             $pa = ProductosAlmacen::where('producto','=',$req->producto)->where('almacen','=',$req->almacen_solicita)->first();
@@ -541,6 +550,13 @@ class RequerimientosController extends Controller
             $pa->precio =  $producto->precio;
             $pa->vence =  $producto->vence;
             $res = $pa->update();
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pa->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->save();
                 
             }
 
@@ -552,6 +568,13 @@ class RequerimientosController extends Controller
                 $pc = ProductosAlmacen::where('producto','=',$pac[0]->producto)->first();
                 $pc->cantidad = $pac[0]->cantidad - $request->cantidad;
                 $res = $pc->update();
+
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->save();
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
@@ -569,6 +592,13 @@ class RequerimientosController extends Controller
                 $pc->cantidad = 0;
                 $ress = $pc->update();
 
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->save();
+
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
                 $pa->cantidad_despachada = $request->cantidad;
@@ -583,6 +613,13 @@ class RequerimientosController extends Controller
                     $pca->cantidad = $pac[1]->cantidad - $totalr;
                     $resss = $pca->update();
 
+                    $mp = new MovimientoProductos();
+                    $mp->id_producto_almacen = $pca->id;
+                    $mp->cantidad = $request->cantidad;
+                    $mp->usuario = Auth::user()->id;
+                    $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                    $mp->save();
+
 
                 } else {
 
@@ -592,6 +629,14 @@ class RequerimientosController extends Controller
                 $pc3 = ProductosAlmacen::where('id','=',$pac[1]->id)->first();
                 $pc3->cantidad = 0;
                 $res = $pc3->update();
+
+                
+                $mp = new MovimientoProductos();
+                $mp->id_producto_almacen = $pc3->id;
+                $mp->cantidad = $request->cantidad;
+                $mp->usuario = Auth::user()->id;
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->save();
 
                 $pc4 = ProductosAlmacen::where('id','=',$pac[2]->id)->first();
                 $pc4->cantidad = $pac[2]->cantidad - $totalr3;
@@ -659,6 +704,17 @@ class RequerimientosController extends Controller
             $pal = ProductosAlmacen::where('producto','=',$r->producto)->where('almacen','=',$r->almacen_solicita)->first();
             $pal->cantidad = $ps->cantidad - $r->cantidad_despachada;
             $res = $pal->update();
+
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $pal->id;
+            $mp->cantidad = $r->cantidad_despachada;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'REVERSO DE REQUERIMIENTO';
+            $mp->save();
+
+
+            
 
             $req = Requerimientos::where('id','=',$id)->first();
             $req->estatus =  1;
