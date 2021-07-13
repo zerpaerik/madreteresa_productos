@@ -120,7 +120,7 @@
                     <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                   </div>
                   <div class="col-md-2">
-                    <label for="exampleInputEmail1">Precio Total</label>
+                    <label for="exampleInputEmail1">Cantidad Total Soles</label>
                     <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
                   </div>
                   </div>
