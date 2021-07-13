@@ -79,11 +79,7 @@
       <div class="card">
               <div class="card-header">
               
-              <a class="btn btn-primary btn-sm" href="{{route('productosu.createl')}}">
-                              <i class="fas fa-arrow-circle-down"></i>
-                              
-                              Descargar Productos
-                          </a>
+             
                
                      
               </div>

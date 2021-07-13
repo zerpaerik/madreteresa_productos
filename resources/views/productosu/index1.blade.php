@@ -122,6 +122,7 @@
                     <th>Medida</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
+                    <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
@@ -137,6 +138,7 @@
                     <td>{{$an->medida}}</td>
                     <td>{{$an->cantidad}}</td>
                     <td>{{$an->precio}}</td>
+                    <td>{{$an->precio * $an->cantidad}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 7)
                     <td>Canto Rey</td>
@@ -181,6 +183,7 @@
                     <th>Medida</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
+                    <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>

@@ -78,12 +78,7 @@
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-              <a class="btn btn-primary btn-sm" href="{{route('productosu.creater')}}">
-                              <i class="fas fa-arrow-circle-down"></i>
-                              
-                              Descargar Productos
-                          </a>
-               
+           
                      
               </div>
               <!-- /.card-header -->
