@@ -33,6 +33,7 @@ class ProductosUsadosController extends Controller
         ->get(); 
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
+        ->where('almacen', '=', $request->almacen)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant,SUM(precio) as preciototal'))
         ->first();
 
@@ -56,6 +57,7 @@ class ProductosUsadosController extends Controller
         ->get(); 
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
+        ->where('almacen', '=', $request->almacen)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant,SUM(precio) as preciototal'))
         ->first();
 
