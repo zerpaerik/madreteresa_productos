@@ -94,6 +94,7 @@
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
+                    <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -112,6 +113,23 @@
                     <td>{{$i->categoria}}</td>
                     <td>{{$i->medida}}</td>
                     <td>{{$i->vence}}</td>
+                    <td>
+                    <a class="btn btn-success btn-sm" id="{{$i->id}}" onclick="viewh(this)">
+                              <i class="fas fa-eye">
+                              </i>
+                              Historial
+                          </a>
+                      
+                    @if(Auth::user()->rol == 1)
+                  <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Editar Cantidad
+                        </a>
+                        @endif
+
+                    </td>
+
                    
                   </tr>
                   @endforeach
@@ -127,6 +145,7 @@
                     <th>Categoria</th>
                     <th>Medida</th>
                     <th>Vence</th>
+                    <th>Acciones</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -208,6 +227,68 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
+
+<script type="text/javascript">
+		function view1(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/editc/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewr(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/requerimiento/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewh(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/historial/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
 <script>
 
 $(document).ready(function() {
