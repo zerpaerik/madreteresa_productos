@@ -64,7 +64,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Almacen Centra</li>
+              <li class="breadcrumb-item active">Almacen Centrall</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -78,15 +78,15 @@
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-               
+           
                      
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Producto</th>                    
+                    <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
@@ -102,8 +102,8 @@
                   @foreach($productos as $i)
                   <tr>
                     <td><span class="badge bg-success">{{$i->nompro}}</span></td>
-                    <td>{{$i->minimo}}</td>
-                    @if($i->cantidad < $i->minimo)
+                    <td>{{$i->minimol}}</td>
+                    @if($i->cantidad < $i->minimol)
                     <td style="background:red">{{$i->cantidad}}</td>
                     @else
                     <td>{{$i->cantidad}}</td>
@@ -119,25 +119,31 @@
                               </i>
                               Historial
                           </a>
-                      
+
                     @if(Auth::user()->rol == 1)
-                  <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
-                            <i class="fas fa-pencil-alt">
-                            </i>
-                            Editar Cantidad
-                        </a>
-                        @endif
 
-                    </td>
 
-                   
+                    <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Editar Cantidad
+                          </a>
+                          @endif
+
+
+
+                   </td>
                   </tr>
                   @endforeach
-
+                 
+                 
+               
+                 
+                 
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>                    
+                  <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
                     <th>Precio Unit.</th>
@@ -163,6 +169,23 @@
     <!-- /.content -->
   </div>
   </div>
+
+  <div class="modal fade" id="viewTicket">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            </div>
+           
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
   </section>
 
   <!-- /.content-wrapper -->
@@ -226,7 +249,26 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
-<!-- page script -->
+
+<script type="text/javascript">
+		function view(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
 
 <script type="text/javascript">
 		function view1(e){
@@ -289,6 +331,7 @@
 
 	
 	</script>
+<!-- page script -->
 <script>
 
 $(document).ready(function() {
