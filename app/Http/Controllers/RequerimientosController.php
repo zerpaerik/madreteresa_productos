@@ -496,9 +496,45 @@ class RequerimientosController extends Controller
     public function edit(Request $request)
     {
 
+        /**
+         *     <option value="2">Recepción</option>
+                      <option value="3">Obstetra</option>
+                      <option value="4">Rayos X</option>
+                      <option value="11">Laboratorio</option>
+                      <option value="7">Canto Rey</option>
+                      <option value="8">Vida Feliz</option>
+                      <option value="9">Zarate</option>
+         * 
+         * 
+         * 
+         */
+
 
 
         $req = Requerimientos::where('id','=',$request->id)->first();
+
+        if($req->almacen_solicita == 2){
+            $es_alm= 'RECEPCIÓN';
+
+        } elseif($req->almacen_solicita == 3){
+            $es_alm= 'OBSTETRA';
+
+        } elseif($req->almacen_solicita == 4){
+            $es_alm= 'RAYOSX';
+
+        } elseif($req->almacen_solicita == 7){
+            $es_alm= 'LABORATORIO';
+
+        } elseif($req->almacen_solicita == 8){
+            $es_alm= 'CANTO REY';
+
+        } elseif($req->almacen_solicita == 9){
+            $es_alm= 'VIDA FELIZ';
+        } else {
+            $es_alm= 'ZARATE';
+
+
+        }
 
 
         $producto = ProductosAlmacen::where('producto','=',$req->producto)->where('almacen','=',1)->first();
@@ -540,7 +576,7 @@ class RequerimientosController extends Controller
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
             $mp->save();
 
             } else {
@@ -555,7 +591,7 @@ class RequerimientosController extends Controller
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
             $mp->save();
                 
             }
@@ -573,7 +609,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
                 $mp->save();
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
@@ -596,7 +632,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
                 $mp->save();
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
@@ -617,7 +653,7 @@ class RequerimientosController extends Controller
                     $mp->id_producto_almacen = $pca->id;
                     $mp->cantidad = $request->cantidad;
                     $mp->usuario = Auth::user()->id;
-                    $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                    $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
                     $mp->save();
 
 
@@ -635,7 +671,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc3->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO -'.' '.$es_alm;
                 $mp->save();
 
                 $pc4 = ProductosAlmacen::where('id','=',$pac[2]->id)->first();
