@@ -82,8 +82,10 @@
                  
                  <div class="col-md-2">
                    <label for="exampleInputEmail1">Total Soles</label>
-                   <input type="text" disabled class="form-control" value="{{$total->preciototal}}" >
+                   <input type="text" disabled class="form-control" value="{{round($total->preciototal, 2)}}" >
                  </div>
+
+                 
              
 
                  </div>
@@ -119,7 +121,7 @@
                     @else
                     <td>{{$i->cantidad}}</td>
                     @endif
-                    <td>{{$i->precio}}</td>
+                    <td>{{round($i->precio,2)}}</td>
                     <td>{{$i->precio * $i->cantidad}}</td>
                     <td>{{$i->categoria}}</td>
                     <td>{{$i->medida}}</td>
