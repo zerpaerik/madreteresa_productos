@@ -158,7 +158,7 @@
                     <td>{{ Carbon\Carbon::createFromDate($eq->created_at)->format('d-m-Y')  }}</td>
                     <td>{{$eq->user}}</td>
                     <td>
-                    <form method="get" action="requerimientos-edit"><input type="hidden" value="{{$eq->id}}" name="id"><input type="number" name="cantidad" value=""><button style="margin-left: 10px;" type="submit" class="btn btn-xs btn-danger">Procesar</button></form>
+                    <form method="get" action="requerimientos-edit"><input type="hidden" value="{{$eq->id}}" name="id"><input type="number" name="cantidad" value="" required min="0" max="{{$eq->cantidad_solicita}}"><button style="margin-left: 10px;" type="submit" class="btn btn-xs btn-danger">Procesar</button></form>
 
                   </td>
                   </tr>

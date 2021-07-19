@@ -74,6 +74,15 @@
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
+              <div class="row">
+                 
+                 <div class="col-md-2">
+                   <label for="exampleInputEmail1">Total Soles</label>
+                   <input type="text" disabled class="form-control" value="{{$total->preciototal}}" >
+                 </div>
+             
+
+                 </div>
            
               </div>
               <!-- /.card-header -->

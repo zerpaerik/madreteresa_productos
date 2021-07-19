@@ -105,8 +105,15 @@ class ProductosController extends Controller
         ->where('a.cantidad','>',0)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',1)
+        ->where('a.cantidad','>',0)
+        ->first(); 
 
-        return view('productos.central',compact('productos'));
+
+        return view('productos.central',compact('productos','total'));
 
         //
     }
@@ -121,14 +128,22 @@ class ProductosController extends Controller
         ->where('a.almacen','=',11)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',11)
+        ->first(); 
 
-        return view('productos.laboratorio',compact('productos'));
+
+        return view('productos.laboratorio',compact('productos','total'));
 
         //
     }
 
     public function recepcion()
     {
+
+        
 
 
         $productos = DB::table('productos_almacen as a')
@@ -137,8 +152,14 @@ class ProductosController extends Controller
         ->where('a.almacen','=',2)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',2)
+        ->first(); 
 
-        return view('productos.recepcion',compact('productos'));
+
+        return view('productos.recepcion',compact('productos','total'));
 
         //
     }
@@ -152,9 +173,14 @@ class ProductosController extends Controller
         ->join('productos as u','u.id','a.producto')
         ->where('a.almacen','=',3)
         ->get(); 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',3)
+        ->first(); 
 
 
-        return view('productos.obstetra',compact('productos'));
+        return view('productos.obstetra',compact('productos','total'));
 
         //
     }
@@ -169,8 +195,14 @@ class ProductosController extends Controller
         ->where('a.almacen','=',4)
         ->get(); 
 
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',4)
+        ->first(); 
 
-        return view('productos.rayos',compact('productos'));
+
+        return view('productos.rayos',compact('productos','total'));
 
         //
     }

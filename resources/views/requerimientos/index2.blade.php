@@ -131,6 +131,10 @@
                     <label for="exampleInputEmail1">Cantidad</label>
                     <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
                   </div>
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Total Soles</label>
+                    <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                  </div>
               
 
                   </div>
@@ -146,6 +150,7 @@
                   <thead>
                   <tr>
                     <th>Producto</th>
+                    <th>Precio</th>
                     <th>Medida</th>
                     <th>Solicitante</th>
                     <th>Cant.Sol</th>
@@ -160,6 +165,7 @@
                   @foreach($requerimientos as $eq)
                   <tr>
                     <td>{{$eq->nompro}}</td>
+                    <td>{{$eq->precio}}</td>
                     <td>{{$eq->medida}}</td>
                     @if($eq->almacen_solicita == 2)
                     <td>Recepción</td>
@@ -209,6 +215,7 @@
                   <tfoot>
                   <tr>
                   <th>Producto</th>
+                    <th>Precio</th>
                     <th>Medida</th>
                     <th>Solicitante</th>
                     <th>Cant.Sol</th>

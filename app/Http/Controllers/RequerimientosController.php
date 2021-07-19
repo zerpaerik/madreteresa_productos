@@ -114,17 +114,19 @@ class RequerimientosController extends Controller
 
             if ($request->solicita == '99') {
                 $requerimientos = DB::table('requerimientos as a')
-            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
             ->join('users as b', 'b.id', 'a.usuario')
             ->join('productos as p', 'p.id', 'a.producto')
+            ->join('productos_almacen as pa', 'pa.id', 'a.producto')
             ->whereBetween('a.created_at', [$f1, $f2])
             ->where('a.estatus', '=', 2)
             ->get();
             } else {
                 $requerimientos = DB::table('requerimientos as a')
-            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
             ->join('users as b', 'b.id', 'a.usuario')
             ->join('productos as p', 'p.id', 'a.producto')
+            ->join('productos_almacen as pa', 'pa.id', 'a.producto')
             ->whereBetween('a.created_at', [$f1, $f2])
             ->where('a.almacen_solicita', '=', $request->solicita)
             ->where('a.estatus', '=', 2)
@@ -132,17 +134,42 @@ class RequerimientosController extends Controller
             }
         
             if ($request->solicita == '99') {
+
+              
             
-            $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+           /* $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
         ->where('estatus', '=', 2)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+        ->first();*/
+
+        $soli = DB::table('requerimientos as a')
+        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+        ->join('users as b', 'b.id', 'a.usuario')
+        ->join('productos as p', 'p.id', 'a.producto')
+        ->join('productos_almacen as pa', 'pa.id', 'a.producto')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.estatus', '=', 2)
         ->first();
+
+
         } else {
-            $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+           /* $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
             ->where('almacen_solicita', '=', $request->solicita)
             ->where('estatus', '=', 2)
             ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+            ->first();*/
+
+            $soli = DB::table('requerimientos as a')
+            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+            ->join('users as b', 'b.id', 'a.usuario')
+            ->join('productos as p', 'p.id', 'a.producto')
+            ->join('productos_almacen as pa', 'pa.id', 'a.producto')
+            ->where('a.almacen_solicita', '=', $request->solicita)
+            ->whereBetween('a.created_at', [$f1, $f2])
+            ->where('a.estatus', '=', 2)
             ->first();
+
+
 
         }
 
@@ -165,35 +192,66 @@ class RequerimientosController extends Controller
 
                 if ($request->solicita == '99') {
                     $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
         ->join('users as b', 'b.id', 'a.usuario')
         ->join('productos as p', 'p.id', 'a.producto')
+        ->join('productos_almacen as pa', 'pa.id', 'a.producto')
         ->whereBetween('a.created_at', [$f1, $f2])
         ->where('a.producto', '=', $request->producto)
         ->where('a.estatus', '=', 2)
         ->get();
 
-                    $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                  /*  $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
                 ->where('estatus', '=', 2)
                 ->where('producto', '=', $request->producto)
                 ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                ->first();*/
+
+
+                $soli = DB::table('requerimientos as a')
+                ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+                ->join('users as b', 'b.id', 'a.usuario')
+                ->join('productos as p', 'p.id', 'a.producto')
+                ->join('productos_almacen as pa', 'pa.id', 'a.producto')
+                ->where('a.producto', '=', $request->producto)
+                ->whereBetween('a.created_at', [$f1, $f2])
+                ->where('a.estatus', '=', 2)
                 ->first();
+    
+
+
+
+
+
+
                 } else {
                     $requerimientos = DB::table('requerimientos as a')
-                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida')
+                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
                     ->join('users as b', 'b.id', 'a.usuario')
                     ->join('productos as p', 'p.id', 'a.producto')
+                    ->join('productos_almacen as pa', 'pa.id', 'a.producto')
                     ->whereBetween('a.created_at', [$f1, $f2])
                     ->where('a.almacen_solicita', '=', $request->solicita)
                     ->where('a.producto', '=', $request->producto)
                     ->where('a.estatus', '=', 2)
                     ->get();
             
-                                $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
+                            /*    $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
                             ->where('almacen_solicita', '=', $request->solicita)
                             ->where('estatus', '=', 2)
                             ->where('producto', '=', $request->producto)
                             ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+                            ->first();*/
+
+                            $soli = DB::table('requerimientos as a')
+                            ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+                            ->join('users as b', 'b.id', 'a.usuario')
+                            ->join('productos as p', 'p.id', 'a.producto')
+                            ->join('productos_almacen as pa', 'pa.id', 'a.producto')
+                            ->where('a.almacen_solicita', '=', $request->solicita)
+                            ->where('a.producto', '=', $request->producto)
+                            ->whereBetween('a.created_at', [$f1, $f2])
+                            ->where('a.estatus', '=', 2)
                             ->first();
 
                 }
@@ -217,18 +275,29 @@ class RequerimientosController extends Controller
         
 
         $requerimientos = DB::table('requerimientos as a')
-        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida')
+        ->select('a.id','a.producto','a.req','a.almacen_solicita','a.sede','a.created_at','a.cantidad_despachada','a.cantidad_solicita','a.estatus','b.name as user','p.nombre as nompro','p.medida as medida','pa.precio')
         ->join('users as b','b.id','a.usuario')
         ->join('productos as p','p.id','a.producto')
+        ->join('productos_almacen as pa', 'pa.id', 'a.producto')
         ->where('a.estatus', '=', 2)
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
 
-        $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
+      /*  $soli = Requerimientos::whereBetween('created_at',  [$f1, $f2])
         ->where('estatus', '=', 2)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
+        ->first();*/
+
+        $soli = DB::table('requerimientos as a')
+        ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
+        ->join('users as b', 'b.id', 'a.usuario')
+        ->join('productos as p', 'p.id', 'a.producto')
+        ->join('productos_almacen as pa', 'pa.id', 'a.producto')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.estatus', '=', 2)
         ->first();
+
 
          $prod = 0;
 
