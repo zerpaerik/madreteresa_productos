@@ -543,6 +543,7 @@ class ProductosController extends Controller
         ->first(); 
 
 
+
         return view('productos.editc', compact('productos'));
     }
 
@@ -625,13 +626,14 @@ class ProductosController extends Controller
 
                 $ingresosd = ProductosAlmacen::where('id','=',$request->id)->first();
                 $ingresosd->cantidad = $request->cantidad;
+                $ingresosd->precio = $request->precio;
                 $res = $ingresosd->update();
 
                 $mp = new MovimientoProductos();
                 $mp->id_producto_almacen = $ingresosd->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'EDICIÓN DE CANTIDAD';
+                $mp->accion = 'EDICIÓN DE CANTIDAD/PRECIO';
                 $mp->save();
 
 

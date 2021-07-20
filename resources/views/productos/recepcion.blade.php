@@ -135,7 +135,7 @@
                     <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
-                              Editar Cantidad
+                              Editar
                           </a>
                           @endif
 
