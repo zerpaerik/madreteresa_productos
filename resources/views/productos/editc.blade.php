@@ -33,7 +33,7 @@
                    </div>
                      <div class="col-md-6">
                      <label for="exampleInputEmail1">Nuevo Precio</label>
-                     <input type="number" class="form-control"  name="precio" value="{{$productos->precio}}" placeholder="Nueva Cantidad">
+                     <input type="float" class="form-control"  name="precio" value="{{$productos->precio}}" placeholder="Nueva Cantidad">
                    </div>
                    
                    </div>
