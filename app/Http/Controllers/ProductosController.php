@@ -572,10 +572,11 @@ class ProductosController extends Controller
         ->first(); 
 
         $historial = DB::table('movimiento_productos as a')
-        ->select('a.id','a.id_producto_almacen','a.cantidad','a.accion','a.usuario','us.name','a.created_at')
+        ->select('a.id','a.id_producto_almacen','a.cantidad','a.accion','a.usuario','us.name','a.created_at','u.almacen')
         ->join('productos_almacen as u','u.id','a.id_producto_almacen')
         ->join('users as us','us.id','a.usuario')
         ->where('a.id_producto_almacen','=',$id)
+        ->where('u.almacen','=',$productos->almacen)
         ->get(); 
 
 
