@@ -64,7 +64,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Productos</li>
+              <li class="breadcrumb-item active">Productosss</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -87,7 +87,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-bordered table-striped">
+                <table id="example" class="table table-bordered table-striped" data-page-length='100'>
                   <thead>
                   <tr>
                     <th>Nombre</th>
@@ -224,6 +224,7 @@
 
 $(document).ready(function() {
     $('#example').DataTable( {
+      
         dom: 'Bfrtip',
         buttons: [
             'excel', 'pdf', 'print'

@@ -84,17 +84,71 @@
 
                     <div class="row">
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Inicio</label>
+                    <label for="exampleInputEmail1">Fecha Descarga</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
                   </div>
-                  <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fin</label>
-                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
-                  </div>
+                 
                  
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Almacen</label>
                     <select class="form-control" name="almacen">
+                    @if($alma == 2)
+                    <option value="2" selected>Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 3)
+                    <option value="2">Recepción</option>
+                    <option value="3" selected>Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 4)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4" selected>Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 7)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7" selected>Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 8)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8" selected>Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 9)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9" selected>Zarate</option>
+                    @elseif($alma == 11)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11" selected>Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @else
                     <option value="2">Recepción</option>
                     <option value="3">Obstetra</option>
                     <option value="4">Rayos X</option>
@@ -102,6 +156,17 @@
                     <option value="7">Canto Rey</option>
                     <option value="8">Vida Feliz</option>
                     <option value="9">Zarate</option>
+                    @endif
+                    </select>                  
+                    </div>
+                    <div class="col-md-3">
+                    <label for="exampleInputEmail1">Producto</label>
+                    <select class="form-control" name="producto">
+                    <option value="0">Todos</option>
+                    @foreach($productosg as $prod)
+                    <option value="{{$prod->id}}" >{{$prod->nombre}}</option>
+                    @endforeach
+                
                     </select>                  
                     </div>
                     <div class="col-md-2" style="margin-top: 30px;">
@@ -122,6 +187,10 @@
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Cantidad Total Soles</label>
                     <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                  </div>
+                  <div class="col-md-2">
+                    <label for="exampleInputEmail1">Producto Seleccionado</label>
+                    <input type="text" disabled class="form-control" value="{{$producto_sel}}" >
                   </div>
                   </div>
                   </form>

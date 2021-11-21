@@ -54,7 +54,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Productos en Almacen Central</h1>
+            <h1 class="m-0 text-dark">Productos en Almacen Centrall</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -82,7 +82,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped" data-page-length='100'>
                   <thead>
                   <tr>
                     <th>Nombre</th>
