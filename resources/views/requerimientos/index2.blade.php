@@ -105,6 +105,63 @@
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Almacen</label>
                     <select class="form-control" name="solicita">
+                    @if($alma == 2)
+                    <option value="2" selected>Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 3)
+                    <option value="2">Recepción</option>
+                    <option value="3" selected>Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 4)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4" selected>Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 7)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7" selected>Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 8)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8" selected>Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @elseif($alma == 9)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11">Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9" selected>Zarate</option>
+                    @elseif($alma == 11)
+                    <option value="2">Recepción</option>
+                    <option value="3">Obstetra</option>
+                    <option value="4">Rayos X</option>
+                    <option value="11" selected>Laboratorio</option>
+                    <option value="7">Canto Rey</option>
+                    <option value="8">Vida Feliz</option>
+                    <option value="9">Zarate</option>
+                    @else
                     <option value="2">Recepción</option>
                     <option value="3">Obstetra</option>
                     <option value="4">Rayos X</option>
@@ -112,7 +169,7 @@
                     <option value="7">Canto Rey</option>
                     <option value="8">Vida Feliz</option>
                     <option value="9">Zarate</option>
-                    <option value="99">Todos</option>
+                    @endif
                     </select>                  
                     </div>
                  

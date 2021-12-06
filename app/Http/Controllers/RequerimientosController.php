@@ -37,6 +37,8 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma = $request->solicita;
+
     } else {
         $f1 = date('Y-m-d');
         $f2 = date('Y-m-d');
@@ -49,9 +51,12 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma = 2;
+
+
     }
 
-        return view('requerimientos.index', compact('requerimientos','f1','f2'));
+        return view('requerimientos.index', compact('requerimientos','f1','f2','alma'));
         //
     }
 
@@ -76,6 +81,9 @@ class RequerimientosController extends Controller
         ->where('a.estatus', '=', 1)
         ->get(); 
 
+        $alma = $request->solicita;
+
+
 
     } else {
         $f1 = date('Y-m-d');
@@ -89,10 +97,13 @@ class RequerimientosController extends Controller
         ->whereBetween('a.created_at', [$f1, $f2])
         ->get(); 
 
+        $alma =2;
+
+
       
     }
 
-        return view('requerimientos.index1', compact('requerimientos','f1','f2'));
+        return view('requerimientos.index1', compact('requerimientos','f1','f2','alma'));
         //
     }
 
@@ -111,6 +122,9 @@ class RequerimientosController extends Controller
         if ($request->inicio && is_null($request->producto)) {
             $f1 = $request->inicio;
             $f2 = $request->fin;
+
+            $alma = $request->solicita;
+
 
             if ($request->solicita == '99') {
                 $requerimientos = DB::table('requerimientos as a')
@@ -136,11 +150,6 @@ class RequerimientosController extends Controller
             if ($request->solicita == '99') {
 
               
-            
-           /* $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
-        ->where('estatus', '=', 2)
-        ->select(DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant'))
-        ->first();*/
 
         $soli = DB::table('requerimientos as a')
         ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
@@ -217,6 +226,9 @@ class RequerimientosController extends Controller
                 ->whereBetween('a.created_at', [$f1, $f2])
                 ->where('a.estatus', '=', 2)
                 ->first();
+
+                $alma = 2;
+
     
 
 
@@ -235,6 +247,9 @@ class RequerimientosController extends Controller
                     ->where('a.producto', '=', $request->producto)
                     ->where('a.estatus', '=', 2)
                     ->get();
+
+                    $alma = $request->solicita;
+
             
                             /*    $soli = Requerimientos::whereBetween('created_at', [$f1, $f2])
                             ->where('almacen_solicita', '=', $request->solicita)
@@ -271,6 +286,9 @@ class RequerimientosController extends Controller
       } else {
         $f1 = date('Y-m-d');
         $f2 = date('Y-m-d');
+
+        $alma = 2;
+
 
         
 
@@ -312,7 +330,7 @@ class RequerimientosController extends Controller
       
     }
 
-        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod'));
+        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod','alma'));
         
     }
 
@@ -645,7 +663,7 @@ class RequerimientosController extends Controller
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
             $mp->save();
 
             } else {
@@ -660,7 +678,7 @@ class RequerimientosController extends Controller
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
             $mp->save();
                 
             }
@@ -678,7 +696,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
                 $mp->save();
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
@@ -701,7 +719,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
                 $mp->save();
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
@@ -722,7 +740,7 @@ class RequerimientosController extends Controller
                     $mp->id_producto_almacen = $pca->id;
                     $mp->cantidad = $request->cantidad;
                     $mp->usuario = Auth::user()->id;
-                    $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                    $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
                     $mp->save();
 
 
@@ -740,7 +758,7 @@ class RequerimientosController extends Controller
                 $mp->id_producto_almacen = $pc3->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
-                $mp->accion = 'DESPACHO DE REQUERIMIENTO';
+                $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
                 $mp->save();
 
                 $pc4 = ProductosAlmacen::where('id','=',$pac[2]->id)->first();

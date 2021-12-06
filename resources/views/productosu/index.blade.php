@@ -84,8 +84,13 @@
 
                     <div class="row">
                   <div class="col-md-3">
-                    <label for="exampleInputEmail1">Fecha Descarga</label>
+                    <label for="exampleInputEmail1">Fecha Inicio</label>
                     <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
+                  </div>
+
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1">Fecha Fin</label>
+                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
                   </div>
                  
                  
