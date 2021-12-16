@@ -432,33 +432,39 @@ class RequerimientosController extends Controller
     public function store(Request $request)
     {
 
-        $req1 = new Req();
-        $req1->save();
+
+        if($request->id_laboratorio['laboratorios'][0]['laboratorio'] == null) {
+            $request->session()->flash('error', 'Debe seleccionar al menos un producto para registrar el requerimiento.');
+           // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
+            return redirect()->action('RequerimientosController@create');
+          } else {
+              $req1 = new Req();
+              $req1->save();
 
 
-        if (isset($request->id_laboratorio)) {
-            foreach ($request->id_laboratorio['laboratorios'] as $key => $laboratorio) {
-              if (!is_null($laboratorio['laboratorio'])) {
+              if (isset($request->id_laboratorio)) {
+                  foreach ($request->id_laboratorio['laboratorios'] as $key => $laboratorio) {
+                      if (!is_null($laboratorio['laboratorio'])) {
+                          $req = new Requerimientos();
+                          $req->producto =  $laboratorio['laboratorio'];
+                          $req->cantidad_solicita =  $request->monto_abol['laboratorios'][$key]['abono'];
+                          $req->almacen_solicita =  $request->solicita;
+                          $req->usuario =  Auth::user()->id;
+                          $req->req =  $req1->id;
+                          $req->sede =  $request->session()->get('sede');
+                          $req->save();
+                      }
+                  }
+              }
 
+              return redirect()->action('RequerimientosController@index', ["created" => true, "req" => Requerimientos::all()]);
 
-                $req = new Requerimientos();
-                $req->producto =  $laboratorio['laboratorio'];
-                $req->cantidad_solicita =  $request->monto_abol['laboratorios'][$key]['abono'];
-                $req->almacen_solicita =  $request->solicita;
-                $req->usuario =  Auth::user()->id;
-                $req->req =  $req1->id;
-                $req->sede =  $request->session()->get('sede');
-                $req->save();
-
-              } 
-            }
           }
 
 
         
         
 
-        return redirect()->action('RequerimientosController@index', ["created" => true, "req" => Requerimientos::all()]);
 
     }
 
@@ -466,7 +472,11 @@ class RequerimientosController extends Controller
     {
 
 
-        
+        if($request->id_laboratorio['laboratorios'][0]['laboratorio'] == null) {
+            $request->session()->flash('error', 'Debe seleccionar al menos un producto para registrar el requerimiento.');
+           // Toastr::error('Error Registrando.', 'Paciente- DNI YA REGISTRADO!', ['progressBar' => true]);
+            return redirect()->action('RequerimientosController@create');
+          } else{
         $req1 = new Req();
         $req1->save();
 
@@ -499,11 +509,15 @@ class RequerimientosController extends Controller
             }
           }
 
+          return redirect()->action('RequerimientosController@enviados', ["created" => true, "req" => Requerimientos::all()]);
+
+
+          }
+
 
         
         
 
-        return redirect()->action('RequerimientosController@enviados', ["created" => true, "req" => Requerimientos::all()]);
 
     }
 
@@ -583,19 +597,7 @@ class RequerimientosController extends Controller
     public function edit(Request $request)
     {
 
-        /**
-         *     <option value="2">Recepción</option>
-                      <option value="3">Obstetra</option>
-                      <option value="4">Rayos X</option>
-                      <option value="11">Laboratorio</option>
-                      <option value="7">Canto Rey</option>
-                      <option value="8">Vida Feliz</option>
-                      <option value="9">Zarate</option>
-         * 
-         * 
-         * 
-         */
-
+        
 
 
         $req = Requerimientos::where('id','=',$request->id)->first();
@@ -643,7 +645,7 @@ class RequerimientosController extends Controller
         return redirect()->action('RequerimientosController@index1')
         ->with('error','La cantidad solicitada excede el stock en almacen, debe hacer la solicitud por una cantidad menor'.' STOCK:'.''.$producto_cantidad->cantidad);
 
-    } else {
+     } else {
 
             if($pal == null){
 
@@ -658,12 +660,21 @@ class RequerimientosController extends Controller
             $pa->almacen = $req->almacen_solicita;
             $pa->save();
 
+            //MOVIMIENTO SALIDA
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $producto->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO  DE REQUERIMIENTO A '.'-'.$es_alm;
+            $mp->save();
+
+            //MOVIMIENTO ENTRADA
 
             $mp = new MovimientoProductos();
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+            $mp->accion = 'ENTRADA DE PRODUCTO DESDE ALM CENTRAL';
             $mp->save();
 
             } else {
@@ -674,12 +685,26 @@ class RequerimientosController extends Controller
             $pa->vence =  $producto->vence;
             $res = $pa->update();
 
+            //MOVIMIENTO SALIDA
+
+            $mp = new MovimientoProductos();
+            $mp->id_producto_almacen = $producto->id;
+            $mp->cantidad = $request->cantidad;
+            $mp->usuario = Auth::user()->id;
+            $mp->accion = 'DESPACHO DE REQUERIMIENTO A'.'-'.$es_alm;
+            $mp->save();
+
+
+            //MOVIMIENTO ENTRADA
+
             $mp = new MovimientoProductos();
             $mp->id_producto_almacen = $pa->id;
             $mp->cantidad = $request->cantidad;
             $mp->usuario = Auth::user()->id;
-            $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
+            $mp->accion = 'ENTRADA DE PRODUCTO DESDE ALM CENTRAL';
             $mp->save();
+
+
                 
             }
 
@@ -692,12 +717,12 @@ class RequerimientosController extends Controller
                 $pc->cantidad = $pac[0]->cantidad - $request->cantidad;
                 $res = $pc->update();
 
-                $mp = new MovimientoProductos();
+              /*  $mp = new MovimientoProductos();
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
                 $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
-                $mp->save();
+                $mp->save();*/
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
@@ -715,12 +740,12 @@ class RequerimientosController extends Controller
                 $pc->cantidad = 0;
                 $ress = $pc->update();
 
-                $mp = new MovimientoProductos();
+               /* $mp = new MovimientoProductos();
                 $mp->id_producto_almacen = $pc->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
                 $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
-                $mp->save();
+                $mp->save();*/
 
                 $pa = Requerimientos::where('id','=',$request->id)->first();
                 $pa->estatus =  2;
@@ -736,12 +761,12 @@ class RequerimientosController extends Controller
                     $pca->cantidad = $pac[1]->cantidad - $totalr;
                     $resss = $pca->update();
 
-                    $mp = new MovimientoProductos();
+                 /*   $mp = new MovimientoProductos();
                     $mp->id_producto_almacen = $pca->id;
                     $mp->cantidad = $request->cantidad;
                     $mp->usuario = Auth::user()->id;
                     $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
-                    $mp->save();
+                    $mp->save();*/
 
 
                 } else {
@@ -754,12 +779,12 @@ class RequerimientosController extends Controller
                 $res = $pc3->update();
 
                 
-                $mp = new MovimientoProductos();
+              /*  $mp = new MovimientoProductos();
                 $mp->id_producto_almacen = $pc3->id;
                 $mp->cantidad = $request->cantidad;
                 $mp->usuario = Auth::user()->id;
                 $mp->accion = 'DESPACHO DE REQUERIMIENTO'.'-'.$es_alm;
-                $mp->save();
+                $mp->save();*/
 
                 $pc4 = ProductosAlmacen::where('id','=',$pac[2]->id)->first();
                 $pc4->cantidad = $pac[2]->cantidad - $totalr3;

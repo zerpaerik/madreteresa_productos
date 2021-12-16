@@ -86,7 +86,8 @@
                     <form method="post" action="requerimientos/create" >			
                   {{ csrf_field() }}  					
 
-                
+            @include('flash-message')
+
             <div class="row">
             <div class="col-md-4">
                     <label for="exampleInputEmail1">Almacen Solicitante</label>
@@ -114,7 +115,7 @@
                 <label for="laboratorios_#index#_laboratorio" class="col-sm-2 control-label">Producto</label>
                     <div class="col-sm-3">
                       <select id="laboratorios_#index#_laboratorio" name="id_laboratorio[laboratorios][#index#][laboratorio]" class="selectServ form-control">
-                        <option value="1">Seleccionar Producto</option>
+                        <option value="">Seleccionar Producto</option>
                         @foreach($productos as $pac)
                           <option value="{{$pac->producto}}">
                             {{$pac->nompro}}
