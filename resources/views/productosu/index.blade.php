@@ -250,6 +250,8 @@
                           <span class="badge bg-success">Reversado por:</span>
                           <span class="badge bg-success">{{$an->eliminado_por}}</span>
 
+
+
                           @endif
                           <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$alma}}">
                               <i class="fas fa-print">
