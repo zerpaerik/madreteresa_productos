@@ -149,6 +149,7 @@ Route::post('productosu/edit', 'ProductosUsadosController@update');
 Route::get('productos_usados_report/{p}/{f1}/{f2}/{al}', 'ProductosUsadosController@productos_usados_report')->middleware('auth');
 
 
+
 Route::get('crear-sesion', 'UserController@sesion')->name('sesion.create')->middleware('auth');
 
 
