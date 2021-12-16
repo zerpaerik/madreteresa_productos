@@ -223,7 +223,7 @@
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->cant}}</td>
                     <td>{{$an->preciototal}}</td>
-                    <td>{{$an->preciototal * $an->cant}}</td>
+                    <td>{{number_format((float)$an->preciototal * $an->cant, 2, '.', '')}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 2)
                     <td>Recepción</td>
