@@ -117,7 +117,7 @@ class ProductosUsadosController extends Controller
         $soli->cant = 0;
         }
 
-        $alma = $request->almacen;
+        $alma = 2;
 
         $producto_sel = 'Todos';
 
