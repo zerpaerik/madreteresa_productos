@@ -29,10 +29,11 @@ class ProductosUsadosController extends Controller
 
 
                 $productos = DB::table('productos_usados as a')
-                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.precio','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
                 ->join('productos as u','u.id','a.producto')
                 ->join('users as us','us.id','a.usuario')
                 ->whereBetween('a.fecha', [$f1, $f2])
+                ->groupBy('a.producto')
                 ->where('a.almacen', '=', $request->almacen)
                 ->get(); 
 
@@ -54,17 +55,19 @@ class ProductosUsadosController extends Controller
             } else {
 
                 $productos = DB::table('productos_usados as a')
-                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.precio','a.fecha','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
                 ->join('productos as u','u.id','a.producto')
                 ->join('users as us','us.id','a.usuario')
                 ->whereBetween('a.fecha', [$f1, $f2])
                 ->where('a.almacen', '=', $request->almacen)
                 ->where('a.producto', '=', $request->producto)
+                ->groupBy('a.producto')
                 ->get(); 
 
                 $soli = ProductosUsados::whereBetween('fecha', [$f1, $f2])
                 ->where('almacen', '=', $request->almacen)
                 ->where('producto', '=', $request->producto)
+                ->groupBy('producto')
                 ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant,SUM(precio*cantidad) as preciototal'))
                 ->first();
 
@@ -97,10 +100,11 @@ class ProductosUsadosController extends Controller
         $f2 = date('Y-m-d');
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.precio','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
         ->whereBetween('a.fecha', [$f1, $f2])
+        ->groupBy('a.producto')
         // ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
@@ -138,6 +142,38 @@ class ProductosUsadosController extends Controller
         
         return view('productosu.index', compact('productos','f1', 'f2','soli','alma','productosg','producto_sel'));
         
+    }
+
+    public function productos_usados_report($producto, $f1, $f2, $almacen){
+
+        $productos = DB::table('productos_usados as a')
+        ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha','a.cantidad','a.precio','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->join('productos as u','u.id','a.producto')
+        ->join('users as us','us.id','a.usuario')
+        ->whereBetween('a.fecha', [$f1, $f2])
+        ->where('a.almacen', '=', $almacen)
+        ->where('a.producto', '=', $producto)
+        ->get(); 
+
+        $productosi = DB::table('productos_usados as a')
+        ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->join('productos as u','u.id','a.producto')
+        ->join('users as us','us.id','a.usuario')
+        ->whereBetween('a.fecha', [$f1, $f2])
+        ->where('a.almacen', '=', $almacen)
+        ->where('a.producto', '=', $producto)
+        ->first(); 
+
+
+        $view = \View::make('productosu.recibo', compact('productos','productosi'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+     
+    
+        return $pdf->stream('productos-usados-recibo'.'.pdf');  
+
+        dd($productos);
+
     }
 
     public function index1(Request $request)

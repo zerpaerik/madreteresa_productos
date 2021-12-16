@@ -146,6 +146,8 @@ Route::get('productos-usados-reversar-{id}', 'ProductosUsadosController@reversar
 Route::get('productos-usados-reversar1-{id}', 'ProductosUsadosController@reversar1')->middleware('auth');
 Route::get('productos-usados-edit-{id}', 'ProductosUsadosController@edit')->name('productosu.edit');
 Route::post('productosu/edit', 'ProductosUsadosController@update');
+Route::get('productos_usados_report/{p}/{f1}/{f2}/{al}', 'ProductosUsadosController@productos_usados_report')->middleware('auth');
+
 
 Route::get('crear-sesion', 'UserController@sesion')->name('sesion.create')->middleware('auth');
 

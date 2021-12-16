@@ -164,7 +164,7 @@
                     @endif
                     </select>                  
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                     <label for="exampleInputEmail1">Producto</label>
                     <select class="form-control" name="producto">
                     <option value="0">Todos</option>
@@ -179,7 +179,8 @@
 
                   </div>
                   </div>
-                  <div class="row">
+                  <!--
+                 <div class="row">
 
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Items</label>
@@ -199,21 +200,19 @@
                   </div>
                   </div>
                   </form>
-              </div>
+              </div>––>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                   <th>Producto</th>
-                    <th>Medida</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
-                    <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
@@ -222,10 +221,9 @@
                   @foreach($productos as $an)
                   <tr>
                     <td>{{$an->nompro}}</td>
-                    <td>{{$an->medida}}</td>
-                    <td>{{$an->cantidad}}</td>
-                    <td>{{$an->precio}}</td>
-                    <td>{{$an->precio * $an->cantidad}}</td>
+                    <td>{{$an->cant}}</td>
+                    <td>{{$an->preciototal}}</td>
+                    <td>{{$an->preciototal * $an->cant}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 2)
                     <td>Recepción</td>
@@ -235,7 +233,6 @@
                     <td>Rayos X</td>
                     @endif
                     <td>{{$an->created_at}}</td>
-                    <td>{{$an->user}}</td>
                     <td>
                     @if($an->estatus == 1)
                     @if(Auth::user()->rol == 1)
@@ -254,6 +251,11 @@
                           <span class="badge bg-success">{{$an->eliminado_por}}</span>
 
                           @endif
+                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$alma}}">
+                              <i class="fas fa-print">
+                              </i>
+                              Recibo
+                          </a>
                           </td>
 
                   </tr>
@@ -266,15 +268,13 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>
-                    <th>Medida</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
                     <th>Fecha</th>
-                    <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
                   </tfoot>
