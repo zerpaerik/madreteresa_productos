@@ -340,7 +340,6 @@ class RequerimientosController extends Controller
         ->groupBy('pa.id')
         ->first();
 
-        dd($soli);
 
 
          $prod = 0;
@@ -349,9 +348,11 @@ class RequerimientosController extends Controller
       
 
 
-       /* if ($soli == null) {
+        if ($soli == null) {
         $soli->cant = 0;
-        }*/
+        $soli->item = 0;
+
+        }
         
 
       
