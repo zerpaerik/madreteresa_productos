@@ -209,9 +209,10 @@
                     <th>Producto</th>
                     <th>Precio</th>
                     <th>Medida</th>
-                    <th>Solicitante</th>
-                    <th>Cant.Sol</th>
-                    <th>Cant.Ent</th>
+                    <th>Almancen</th>
+                    <th>Solicitado</th>
+                    <th>Entregado</th>
+                    <th>Monto</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>
@@ -247,6 +248,7 @@
                     
                     <td>{{$eq->cantidad_solicita}}</td>
                     <td>{{$eq->cantidad_despachada}}</td>
+                    <td>{{$eq->precio}}</td>
                     <td>{{ Carbon\Carbon::createFromDate($eq->created_at)->format('d-m-Y')  }}</td>
                     <td>
                     <a class="btn btn-danger btn-sm" href="requerimientos-reversar-{{$eq->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
@@ -274,9 +276,10 @@
                   <th>Producto</th>
                     <th>Precio</th>
                     <th>Medida</th>
-                    <th>Solicitante</th>
-                    <th>Cant.Sol</th>
-                    <th>Cant.Ent</th>
+                    <th>Almancen</th>
+                    <th>Solicitado</th>
+                    <th>Entregado</th>
+                    <th>Monto</th>
                     <th>Fecha</th>
                     <th>Acciones</th>
                   </tr>
