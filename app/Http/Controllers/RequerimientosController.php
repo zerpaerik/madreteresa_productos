@@ -340,6 +340,8 @@ class RequerimientosController extends Controller
         ->groupBy('pa.id')
         ->first();
 
+        dd($soli);
+
 
          $prod = 0;
 
