@@ -243,11 +243,9 @@
                     @else
                     <td>Zarate</td>
                     @endif
-                    
-                    
                     <td>{{$eq->cantidad_solicita}}</td>
                     <td>{{$eq->cantidad_despachada}}</td>
-                    <td>{{$eq->precio}}</td>
+                    <td>{{number_format((float)$eq->cantidad_despachada * $eq->precio, 2, '.', '')}}</td>
                     <td>{{ Carbon\Carbon::createFromDate($eq->created_at)->format('d-m-Y')  }}</td>
                     <td>
                     <a class="btn btn-danger btn-sm" href="requerimientos-reversar-{{$eq->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
