@@ -347,7 +347,7 @@ class RequerimientosController extends Controller
       
 
 
-        if ($soli->item == 0) {
+        if ($soli == null) {
         $soli->cant = 0;
         }
 
