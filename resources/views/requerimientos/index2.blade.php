@@ -178,7 +178,7 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
-
+                  @if($soli)
                   <div class="row">
                   <div class="col-md-2">
                     <label for="exampleInputEmail1">Items</label>
@@ -192,9 +192,8 @@
                     <label for="exampleInputEmail1">Total Soles</label>
                     <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
                   </div>
-              
-
                   </div>
+                  @endif
 
                   
                 
