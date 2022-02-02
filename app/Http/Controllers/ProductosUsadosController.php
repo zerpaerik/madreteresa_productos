@@ -217,10 +217,10 @@ class ProductosUsadosController extends Controller
         $f2 = date('Y-m-d');
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.precio','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen'/*'us.name as user'*/)
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.precio','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
-        //->join('users as us','us.id','a.usuario')
-        ->whereBetween('a.fecha', [$f1, $f2])
+        ->join('users as us','us.id','a.usuario')
+        ->whereBetween('a.created_at', [$f1, $f2])
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
