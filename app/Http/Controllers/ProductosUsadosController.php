@@ -224,7 +224,6 @@ class ProductosUsadosController extends Controller
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
-        dd($productos);
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
@@ -238,7 +237,7 @@ class ProductosUsadosController extends Controller
 
     }
 
-    $productos = DB::table('productos as a')
+    $productosg = DB::table('productos as a')
     ->select('a.id','a.nombre','a.cantidad','a.precio','a.estatus')
     ->join('productos_usados as u','u.producto','a.id')
     ->where('a.estatus','=',1)
@@ -248,7 +247,7 @@ class ProductosUsadosController extends Controller
 
 
 
-        return view('productosu.index1', compact('productos','f1', 'f2','soli','productos'));
+        return view('productosu.index1', compact('productos','f1', 'f2','soli','productosg'));
         //
     }
 
