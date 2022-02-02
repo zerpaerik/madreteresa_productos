@@ -224,6 +224,7 @@ class ProductosUsadosController extends Controller
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
+        dd($productos);
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
