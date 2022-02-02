@@ -172,7 +172,6 @@ class ProductosUsadosController extends Controller
     
         return $pdf->stream('productos-usados-recibo'.'.pdf');  
 
-        dd($productos);
 
     }
 
@@ -243,7 +242,6 @@ class ProductosUsadosController extends Controller
     ->where('a.estatus','=',1)
     ->get(); 
 
-    dd($productos);
 
 
 
