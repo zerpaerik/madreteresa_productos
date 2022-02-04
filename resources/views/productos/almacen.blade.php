@@ -87,6 +87,7 @@
                 <table id="example1" class="table table-bordered table-striped" data-page-length='100'>
                   <thead>
                   <tr>
+                  <th>id</th>
                     <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
@@ -102,6 +103,7 @@
 
                   @foreach($productos as $i)
                   <tr>
+                  <td>{{$i->id}}</td>
                     <td><span class="badge bg-success">{{$i->nompro}}</span></td>
                     <td>{{$i->minimol}}</td>
                     @if($i->cantidad < $i->minimol)
@@ -156,6 +158,7 @@
                   </tbody>
                   <tfoot>
                   <tr>
+                  <th>id</th>
                     <th>Producto</th>
                     <th>Stock Minimo</th>
                     <th>Cantidad</th>
