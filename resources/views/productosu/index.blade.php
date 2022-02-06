@@ -162,6 +162,22 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
 
                   </div>
+                  <div class="col-md-2">
+                            <label for="exampleInputEmail1">Items</label>
+                            <input type="text" disabled class="form-control" value="{{$soli->item}}" >
+                            </div>
+                            <div class="col-md-2">
+                            <label for="exampleInputEmail1">Cantidad</label>
+                            <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
+                            </div>
+                            <div class="col-md-2">
+                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
+                              <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                            </div>
+
+
+
+                            </form>
                   </div>
                   <!--
                  <div class="row">
