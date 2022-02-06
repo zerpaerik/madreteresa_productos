@@ -105,7 +105,7 @@
                             </div>
                             <div class="col-md-2">
                               <label for="exampleInputEmail1">Cantidad Total Soles</label>
-                              <input type="text" disabled class="form-control" value="{{$soli->preciototal}}" >
+                              <input type="text" disabled class="form-control" value="{{number_format((float)$soli->preciototal, 2, '.', '')}}" >
                             </div>
 
 
@@ -137,8 +137,8 @@
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
                     <td>{{$an->cantidad}}</td>
-                    <td>{{$an->precio}}</td>
-                    <td>{{$an->precio * $an->cantidad}}</td>
+                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
+                    <td>{{number_format((float)$an->precio * $an->cantidad, 2, '.', '')}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 7)
                     <td>Canto Rey</td>
