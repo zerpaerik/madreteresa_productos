@@ -206,7 +206,7 @@
                   <tr>
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->cant}}</td>
-                    <td>{{$an->precio}}</td>
+                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
                     <td>{{number_format((float)$an->precio * $an->cant, 2, '.', '')}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 2)
