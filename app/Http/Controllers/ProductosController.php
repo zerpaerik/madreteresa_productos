@@ -682,7 +682,11 @@ class ProductosController extends Controller
                 $productos = ProductosAlmacen::where('ingreso','=',$id)->first();
 
                 $productosa = ProductosAlmacen::where('ingreso','=',$id)->first();
-                $productosa->delete();
+                if ($productosa != null) {
+                    $productosaa = ProductosAlmacen::where('ingreso', '=', $id)->first();
+                    $productosaa->delete();
+                }
+               
 
                 $ingresosd = IngresosDetalle::where('id','=',$id)->first();
                 $ingresosd->estatus =0;
