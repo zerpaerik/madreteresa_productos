@@ -119,6 +119,10 @@ class RequerimientosController extends Controller
         ->where('a.almacen','=',1)
         ->get();  
 
+        $item = 0;
+        $desp = 0;
+        $total = 0;
+
         if ($request->inicio && is_null($request->producto)) {
             $f1 = $request->inicio;
             $f2 = $request->fin;
@@ -137,8 +141,16 @@ class RequerimientosController extends Controller
             ->groupBy('a.id')
             ->get();
 
+            foreach ($requerimientos as $key => $value) {
+                $item += 1;
+                $desp += $value->cantidad_despachada;
+                $total += $value->cantidad_despachada * $value->precio;
+            }
+
 
             } else {
+        
+
 
                 $requerimientos = DB::table('requerimientos as a')
             ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio')
@@ -151,48 +163,20 @@ class RequerimientosController extends Controller
             ->groupBy('a.id')
             ->get();
 
+            foreach ($requerimientos as $key => $value) {
+                $item += 1;
+                $desp += $value->cantidad_despachada;
+                $total += $value->cantidad_despachada * $value->precio;
+            }
+
+
 
 
             }
         
-            if ($request->solicita == '99') {
+          
 
-              
-
-                $soli = DB::table('requerimientos as a')
-                ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio','pa.id',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
-                ->join('users as b', 'b.id', 'a.usuario')
-                ->join('productos as p', 'p.id', 'a.producto')
-                ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
-                ->whereBetween('a.created_at', [$f1, $f2])
-                ->where('a.estatus', '=', 2)
-                ->groupBy('pa.id')
-                ->first();
-
-
-                } else {
-                
-
-                    $soli = DB::table('requerimientos as a')
-                    ->select('a.id', 'a.producto', 'a.req', 'a.almacen_solicita', 'a.sede', 'a.created_at', 'a.cantidad_despachada', 'a.cantidad_solicita', 'a.estatus', 'b.name as user', 'p.nombre as nompro', 'p.medida as medida','pa.precio as precio','pa.id',DB::raw('COUNT(*) as item, SUM(cantidad_despachada) as cant, SUM(a.cantidad_despachada*pa.precio) as preciototal'))
-                    ->join('users as b', 'b.id', 'a.usuario')
-                    ->join('productos as p', 'p.id', 'a.producto')
-                    ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
-                    ->where('a.almacen_solicita', '=', $request->solicita)
-                    ->whereBetween('a.created_at', [$f1, $f2])
-                    ->where('a.estatus', '=', 2)
-                    ->groupBy('pa.id')
-                    ->first();
-
-
-
-
-                }
-
-        if ($soli->item == 0) {
-        $soli->cant = 0;
-        }
-
+       
        
 
 
@@ -217,6 +201,12 @@ class RequerimientosController extends Controller
                     ->where('a.estatus', '=', 2)
                     ->groupBy('a.id')
                     ->get();
+
+                    foreach ($requerimientos as $key => $value) {
+                        $item += 1;
+                        $desp += $value->cantidad_despachada;
+                        $total += $value->cantidad_despachada * $value->precio;
+                    }
 
 
 
@@ -260,6 +250,12 @@ class RequerimientosController extends Controller
                     ->groupBy('a.id')
                     ->get();
 
+                    foreach ($requerimientos as $key => $value) {
+                        $item += 1;
+                        $desp += $value->cantidad_despachada;
+                        $total += $value->cantidad_despachada * $value->precio;
+                    }
+
 
 
                   
@@ -283,7 +279,6 @@ class RequerimientosController extends Controller
                             ->where('a.producto', '=', $request->producto)
                             ->whereBetween('a.created_at', [$f1, $f2])
                             ->where('a.estatus', '=', 2)
-                            ->groupBy('pa.id')
                             ->first();
 
                 }
@@ -296,9 +291,6 @@ class RequerimientosController extends Controller
         ->first();
 
 
-        if ($soli->item == 0) {
-        $soli->cant = 0;
-        }
 
       } else {
         $f1 = date('Y-m-d');
@@ -320,6 +312,12 @@ class RequerimientosController extends Controller
         ->groupBy('a.id')
         ->get(); 
 
+        foreach ($requerimientos as $key => $value) {
+            $item += 1;
+            $desp += $value->cantidad_despachada;
+            $total += $value->cantidad_despachada * $value->precio;
+        }
+
 
 
         //dd($requerimientos);
@@ -337,7 +335,6 @@ class RequerimientosController extends Controller
         ->join('productos_almacen as pa', 'pa.producto', 'a.producto')
         ->whereBetween('a.created_at', [$f1, $f2])
         ->where('a.estatus', '=', 2)
-        ->groupBy('pa.id')
         ->first();
 
 
@@ -358,7 +355,7 @@ class RequerimientosController extends Controller
       
     }
 
-        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod','alma'));
+        return view('requerimientos.index2', compact('requerimientos','f1','f2','productos','soli','prod','alma','item','desp','total'));
         
     }
 
