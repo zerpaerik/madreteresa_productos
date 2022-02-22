@@ -44,8 +44,8 @@ class ProductosUsadosController extends Controller
 
                 foreach ($productos as $key => $value) {
                     $item += 1;
-                    $desp += $value->cantidad;
-                    $total += $value->cantidad * $value->precio;
+                    $desp += $value->cant;
+                    $total += $value->preciototal;
                 }
     
 
@@ -78,8 +78,8 @@ class ProductosUsadosController extends Controller
 
                 foreach ($productos as $key => $value) {
                     $item += 1;
-                    $desp += $value->cantidad;
-                    $total += $value->cantidad * $value->precio;
+                    $desp += $value->cant;
+                    $total += $value->preciototal;
                 }
 
                 $soli = ProductosUsados::whereBetween('created_at', [$f1, $f2])
@@ -128,8 +128,8 @@ class ProductosUsadosController extends Controller
 
         foreach ($productos as $key => $value) {
             $item += 1;
-            $desp += $value->cantidad;
-            $total += $value->cantidad * $value->precio;
+                    $desp += $value->cant;
+                    $total += $value->preciototal;
         }
 
         $soli = ProductosUsados::whereBetween('created_at', [$f1, $f2])
