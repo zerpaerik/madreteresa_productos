@@ -164,15 +164,15 @@
                   </div>
                   <div class="col-md-2">
                             <label for="exampleInputEmail1">Items</label>
-                            <input type="text" disabled class="form-control" value="{{$soli->item}}" >
+                            <input type="text" disabled class="form-control" value="{{$item}}" >
                             </div>
                             <div class="col-md-2">
                             <label for="exampleInputEmail1">Cantidad</label>
-                            <input type="text" disabled class="form-control" value="{{$soli->cant}}" >
+                            <input type="text" disabled class="form-control" value="{{$desp}}" >
                             </div>
                             <div class="col-md-2">
                               <label for="exampleInputEmail1">Cantidad Total Soles</label>
-                              <input type="text" disabled class="form-control" value="{{number_format((float)$soli->preciototal, 2, '.', '')}}" >
+                              <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
                             </div>
 
 

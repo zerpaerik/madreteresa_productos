@@ -20,6 +20,11 @@ class ProductosUsadosController extends Controller
     public function index(Request $request)
     {
 
+        
+        $item = 0;
+        $desp = 0;
+        $total = 0;
+
         if($request->inicio){
             $f1 = $request->inicio;
             $f2 = $request->fin;
@@ -36,6 +41,13 @@ class ProductosUsadosController extends Controller
                 ->groupBy('a.producto')
                 ->where('a.almacen', '=', $request->almacen)
                 ->get(); 
+
+                foreach ($productos as $key => $value) {
+                    $item += 1;
+                    $desp += $value->cantidad;
+                    $total += $value->cantidad * $value->precio;
+                }
+    
 
                 $soli = ProductosUsados::whereBetween('created_at', [$f1, $f2])
                 ->where('almacen', '=', $request->almacen)
@@ -63,6 +75,12 @@ class ProductosUsadosController extends Controller
                 ->where('a.producto', '=', $request->producto)
                 ->groupBy('a.producto')
                 ->get(); 
+
+                foreach ($productos as $key => $value) {
+                    $item += 1;
+                    $desp += $value->cantidad;
+                    $total += $value->cantidad * $value->precio;
+                }
 
                 $soli = ProductosUsados::whereBetween('created_at', [$f1, $f2])
                 ->where('almacen', '=', $request->almacen)
@@ -108,6 +126,12 @@ class ProductosUsadosController extends Controller
         // ->where('a.almacen', '=', $request->almacen)
         ->get(); 
 
+        foreach ($productos as $key => $value) {
+            $item += 1;
+            $desp += $value->cantidad;
+            $total += $value->cantidad * $value->precio;
+        }
+
         $soli = ProductosUsados::whereBetween('created_at', [$f1, $f2])
         // ->where('almacen', '=', $request->almacen)
         ->select(DB::raw('COUNT(*) as item, SUM(cantidad) as cant,SUM(precio*cantidad) as preciototal'))
@@ -140,7 +164,7 @@ class ProductosUsadosController extends Controller
    // dd($productosg);
 
         
-        return view('productosu.index', compact('productos','f1', 'f2','soli','alma','productosg','producto_sel'));
+        return view('productosu.index', compact('productos','f1', 'f2','soli','alma','productosg','producto_sel','item','desp','total'));
         
     }
 
@@ -186,6 +210,11 @@ class ProductosUsadosController extends Controller
             $almacen = 9;
             }
 
+             
+        $item = 0;
+        $desp = 0;
+        $total = 0;
+
    
 
         if($request->inicio){
@@ -199,6 +228,12 @@ class ProductosUsadosController extends Controller
         ->whereBetween('a.fecha', [$f1, $f2])
         ->where('a.almacen','=',$almacen)
         ->get(); 
+
+        foreach ($productos as $key => $value) {
+            $item += 1;
+            $desp += $value->cantidad;
+            $total += $value->cantidad * $value->precio;
+        }
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
@@ -224,6 +259,12 @@ class ProductosUsadosController extends Controller
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
+        foreach ($productos as $key => $value) {
+            $item += 1;
+            $desp += $value->cantidad;
+            $total += $value->cantidad * $value->precio;
+        }
+
 
         $soli = ProductosUsados::whereBetween('fecha',  [$f1, $f2])
         ->where('almacen','=',$almacen)
@@ -247,7 +288,7 @@ class ProductosUsadosController extends Controller
 
 
 
-        return view('productosu.index1', compact('productos','f1', 'f2','soli','productosg'));
+        return view('productosu.index1', compact('productos','f1', 'f2','soli','productosg','item','desp','total'));
         //
     }
 
