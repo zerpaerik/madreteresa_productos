@@ -74,13 +74,23 @@
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-
               <a class="btn btn-primary btn-sm" href="{{route('productosu.create')}}">
                               <i class="fas fa-arrow-circle-down"></i>
                               
                               Agregar
                           </a>
                
+              <div class="row">
+                 
+                 <div class="col-md-2">
+                   <label for="exampleInputEmail1">Total Soles</label>
+                   <input type="text" disabled class="form-control" value="{{round($total->preciototal, 2)}}" >
+                 </div>
+             
+
+                 </div>
+
+            
               </div>
               <!-- /.card-header -->
               <div class="card-body">

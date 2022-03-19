@@ -131,7 +131,11 @@
                     <td>
                     @if(Auth::user()->rol == 1)
 
-
+                    <a class="btn btn-success btn-sm" id="{{$i->id}}" onclick="viewh(this)">
+                              <i class="fas fa-eye">
+                              </i>
+                              Historial
+                          </a>
                     <a class="btn btn-primary btn-sm" id="{{$i->id}}" onclick="view1(this)">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -305,6 +309,27 @@
 		    $.ajax({
 		        type: "GET",
 		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewh(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/historial/"+id,
 		        success: function (data) {
 		            $("#viewTicket .modal-body").html(data);
 		            $('#viewTicket').modal('show');

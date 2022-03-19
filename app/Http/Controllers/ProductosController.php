@@ -226,8 +226,15 @@ class ProductosController extends Controller
         ->where('a.almacen','=',$almacen)
         ->get(); 
 
+        
+        $total = DB::table('productos_almacen as a')
+        ->select('a.id','a.producto','a.cantidad','a.precio','a.vence','u.minimol','u.nombre as nompro','u.categoria','u.medida','a.almacen',DB::raw('SUM(a.cantidad*a.precio) as preciototal'))
+        ->join('productos as u','u.id','a.producto')
+        ->where('a.almacen','=',$almacen)
+        ->first(); 
 
-        return view('productos.almacen',compact('productos'));
+
+        return view('productos.almacen',compact('productos','total'));
 
         //
     }

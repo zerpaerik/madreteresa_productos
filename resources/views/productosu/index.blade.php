@@ -229,6 +229,8 @@
                     <td>Recepción</td>
                     @elseif($an->almacen == 3)
                     <td>Obstetra</td>
+                    @elseif($an->almacen == 11)
+                    <td>Laboratorio</td>
                     @else
                     <td>Rayos X</td>
                     @endif
