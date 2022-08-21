@@ -96,6 +96,8 @@ Route::get('requerimientos-delete-{id}', 'RequerimientosController@delete')->mid
 Route::post('requerimientos/edit', 'RequerimientosController@update');
 Route::get('requerimientos/view/{id}', 'RequerimientosController@ver');
 Route::get('requerimientos-ticket-{id}', 'RequerimientosController@ticket');
+Route::get('reporte_individual', 'RequerimientosController@reporte_individual')->name('reporte_individual.index');
+Route::get('rep-ind/{id}/{id2}/{f1}/{f2}', 'RequerimientosController@reporte_individual_pdf');
 
 
 Route::get('material', 'MaterialController@index')->name('material.index');

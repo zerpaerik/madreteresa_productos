@@ -145,6 +145,13 @@
                 </a>
               </li>
 
+              <li class="nav-item">
+                <a href="{{route('reporte_individual.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reporte</p>
+                </a>
+              </li>
+
               @else
               <li class="nav-item">
                 <a href="{{route('requerimientos.enviados')}}" class="nav-link">
@@ -153,6 +160,8 @@
                 </a>
               </li>
               @endif
+
+          
               
          
             </ul>
