@@ -34,7 +34,7 @@ class ProductosUsadosController extends Controller
 
 
                 $productos = DB::table('productos_usados as a')
-                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.precio','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','u.precio','a.almacen','us.name as user')
                 ->join('productos as u','u.id','a.producto')
                 ->join('users as us','us.id','a.usuario')
                 ->whereBetween('a.created_at', [$f1, $f2])
@@ -67,7 +67,7 @@ class ProductosUsadosController extends Controller
             } else {
 
                 $productos = DB::table('productos_usados as a')
-                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.precio','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+                ->select('a.id','a.producto','a.estatus','a.eliminado_por','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','u.precio','a.almacen','us.name as user')
                 ->join('productos as u','u.id','a.producto')
                 ->join('users as us','us.id','a.usuario')
                 ->whereBetween('a.created_at', [$f1, $f2])
@@ -118,7 +118,7 @@ class ProductosUsadosController extends Controller
         $f2 = date('Y-m-d');
 
         $productos = DB::table('productos_usados as a')
-        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.precio','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','u.precio','a.almacen','us.name as user')
         ->join('productos as u','u.id','a.producto')
         ->join('users as us','us.id','a.usuario')
         ->whereBetween('a.created_at', [$f1, $f2])
