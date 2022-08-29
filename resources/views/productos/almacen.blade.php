@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
 
   <!-- Tempusdominus Bbootstrap 4 -->
@@ -26,6 +27,8 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
+
+
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <!-- DataTables -->
@@ -56,7 +59,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Almacen de Productos</h1>
+          <h1 class="m-0 text-dark">Almacen de Productos</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -70,7 +73,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content">   
     @include('flash-message')
 
       <div class="container-fluid">
@@ -91,24 +94,23 @@
              
 
                  </div>
-
-            
+               
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example" class="table table-bordered table-striped" data-page-length='100'>
+                <table id="example" class="table table-bordered table-striped" data-page-length='10'>
                   <thead>
                   <tr>
-                  <th>id</th>
-                    <th>Producto</th>
-                    <th>Stock Minimo</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unit.</th>
-                    <th>Total Soles.</th>
-                    <th>Categoria</th>
+                    <th>id</th>
+                    <th>Product.</th>
+                    <th>Stock Min.</th>
+                    <th>Cant.</th>
+                    <th>Prec Unit.</th>
+                    <th>Total So.</th>
+                    <th>Categ.</th>
                     <th>Medida</th>
                     <th>Vence</th>
-                    <th>Acciones</th>
+                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
@@ -152,16 +154,16 @@
 
 
                     <a class="btn btn-success btn-sm"  id="{{$i->id}}" onclick="viewr(this)">
-          <i class="fas fa-pencil-alt">
-          </i>
-          Crear Requerimiento
-      </a>
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Crear Requerimiento
+                    </a>
 
-     
+                  
 
-      @endif</td>
-                  </tr>
-                  @endforeach
+                    @endif</td>
+                                </tr>
+                                @endforeach
                  
                  
                
@@ -171,15 +173,16 @@
                   <tfoot>
                   <tr>
                   <th>id</th>
-                    <th>Producto</th>
-                    <th>Stock Minimo</th>
-                    <th>Cantidad</th>
-                    <th>Precio Unit.</th>
-                    <th>Total Soles.</th>
-                    <th>Categoria</th>
+                    <th>Product.</th>
+                    <th>Stock Min.</th>
+                    <th>Cant.</th>
+                    <th>Prec Unit.</th>
+                    <th>Total So.</th>
+                    <th>Categ.</th>
                     <th>Medida</th>
                     <th>Vence</th>
-                    <th>Acciones</th>
+                    <th></th>
+
                   </tr>
                   </tfoot>
                 </table>
@@ -193,27 +196,6 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
-     
-
-     
-  <div class="modal fade" id="viewTicket">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-            </div>
-           
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-
-     
     </section>
     <!-- /.content -->
   </div>
@@ -232,91 +214,6 @@
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
-
-<script type="text/javascript">
-		function viewh(e){
-		    var id = $(e).attr('id');
-
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/productos/historial/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
-
-
-<script type="text/javascript">
-		function view1(e){
-		    var id = $(e).attr('id');
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/productos/editc/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
-
-
-
-<script type="text/javascript">
-		function view(e){
-		    var id = $(e).attr('id');
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/productos/descargar/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
-
-<script type="text/javascript">
-		function viewr(e){
-		    var id = $(e).attr('id');
-
-		    
-		    $.ajax({
-		        type: "GET",
-		        url: "/productos/requerimiento/"+id,
-		        success: function (data) {
-		            $("#viewTicket .modal-body").html(data);
-		            $('#viewTicket').modal('show');
-		        },
-		        error: function (data) {
-		            console.log('Error:', data);
-		        }
-		    });
-		}
-
-	
-	</script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -350,6 +247,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script> 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -358,21 +260,33 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 <!-- AdminLTE App -->
-<!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-  $(function () {
-    $(document).ready(function() {
+
+$(document).ready(function() {
     $('#example').DataTable( {
+      
         dom: 'Bfrtip',
         buttons: [
             'excel', 'pdf', 'print'
         ]
     } );
 } );
+</script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true,
+      "autoWidth": false,
+      dom: 'Bfrtip',
+      buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
