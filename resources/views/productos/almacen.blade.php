@@ -263,6 +263,92 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
+
+
+
+<script type="text/javascript">
+		function view(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/descargar/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function view1(e){
+		    var id = $(e).attr('id');
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/editc/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewr(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/requerimiento/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+
+<script type="text/javascript">
+		function viewh(e){
+		    var id = $(e).attr('id');
+
+		    
+		    $.ajax({
+		        type: "GET",
+		        url: "/productos/historial/"+id,
+		        success: function (data) {
+		            $("#viewTicket .modal-body").html(data);
+		            $('#viewTicket').modal('show');
+		        },
+		        error: function (data) {
+		            console.log('Error:', data);
+		        }
+		    });
+		}
+
+	
+	</script>
+<!-- page script -->
+<script>
 <!-- page script -->
 <script>
 
