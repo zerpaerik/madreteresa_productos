@@ -85,7 +85,7 @@
             <td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->medida }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->cantidad }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->precio }}</td>
-            <td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->fecha }}</td>
+            <td style="padding: 0;width: 5%;text-overflow: ellipsis;"> {{ $ingreso->created_at }}</td>
 
 		
 			

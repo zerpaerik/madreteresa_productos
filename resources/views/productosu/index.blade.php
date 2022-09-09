@@ -255,7 +255,7 @@
 
 
                           @endif
-                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$alma}}">
+                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$an->almacen}}">
                               <i class="fas fa-print">
                               </i>
                               Recibo
