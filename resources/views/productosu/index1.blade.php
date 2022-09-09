@@ -121,7 +121,6 @@
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
                     <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>
@@ -136,9 +135,8 @@
                   <tr>
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
-                    <td>{{$an->cantidad}}</td>
-                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
-                    <td>{{number_format((float)$an->precio * $an->cantidad, 2, '.', '')}}</td>
+                    <td>{{$an->cant}}</td>
+                    <td>{{number_format((float)$an->preciototal, 2, '.', '')}}</td>
                     <td>{{$an->fecha}}</td>
                     @if($an->almacen == 7)
                     <td>Canto Rey</td>
@@ -158,6 +156,12 @@
                               <i class="fas fa-trash">
                               </i>
                               Reversar
+                          </a>
+
+                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_report/{{$an->producto}}/{{$f1}}/{{$f2}}/{{$an->almacen}}">
+                              <i class="fas fa-print">
+                              </i>
+                              Recibo
                           </a>
 
                        
@@ -182,7 +186,6 @@
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
                     <th>Total Soles</th>
                     <th>Fecha Descarga</th>
                     <th>Almacen</th>

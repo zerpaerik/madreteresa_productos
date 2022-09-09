@@ -38,20 +38,22 @@ class ProductosController extends Controller
             $f2 = $request->fin;
 
         $ingresos = DB::table('ingresos_detalle as a')
-        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto', 'p.medida')
+        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'i.created_at','i.usuario','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as nompro', 'p.medida','a.producto as product')
         ->join('ingresos as i','i.id','a.ingreso')
         ->join('productos as p','p.id','a.producto')
         ->join('users as u','u.id','i.usuario')
         ->whereBetween('i.created_at', [$f1, $f2])
+        ->groupBy('a.producto')
         ->get();
 
 
     } else {
         $ingresos = DB::table('ingresos_detalle as a')
-        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad','i.created_at','i.usuario','a.precio','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as producto','p.medida')
+        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','i.created_at','i.usuario',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio*a.cantidad) as preciototal'),'i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as nompro','p.medida','a.producto as product')
         ->join('ingresos as i','i.id','a.ingreso')
         ->join('productos as p','p.id','a.producto')
         ->join('users as u','u.id','i.usuario')
+        ->groupBy('a.producto')
         ->where('i.created_at','=',date('Y-m-d'))
         ->get();
 
@@ -66,6 +68,52 @@ class ProductosController extends Controller
 
         return view('productos.ingresos', compact('ingresos','f1','f2'));
     } 
+
+    public function recibo_ingreso($producto,$f1,$f2)
+    {
+
+
+
+      
+
+        $ingresos = DB::table('ingresos_detalle as a')
+        ->select('a.id','a.producto','a.ingreso','a.created_at','a.vence','a.estatus','a.precio','a.usuario_elimina','a.cantidad','i.*','p.nombre as nompro','p.medida','u.name as nombre_usuario')
+         ->join('ingresos as i','i.id','a.ingreso')
+         ->join('productos as p','p.id','a.producto')
+         ->join('users as u','u.id','i.usuario')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.producto','=',$producto)
+        ->get();
+
+        $fin = DB::table('ingresos_detalle as a')
+        ->select('a.id','a.producto','a.ingreso','a.created_at','a.vence','a.estatus','a.precio','a.usuario_elimina',DB::raw('SUM(a.cantidad) as cant,SUM(a.precio) as preciototal'),'i.*','p.nombre as nompro','p.medida','u.name as nombre_usuario')
+         ->join('ingresos as i','i.id','a.ingreso')
+         ->join('productos as p','p.id','a.producto')
+         ->join('users as u','u.id','i.usuario')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.producto','=',$producto)
+        ->first();
+
+
+
+        $view = \View::make('productos.recibo_ingresos', compact('ingresos','fin'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+     
+    
+        return $pdf->stream('recibo-ingresos-detalle'.'.pdf');  
+
+
+
+
+
+    } 
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

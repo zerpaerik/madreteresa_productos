@@ -271,6 +271,8 @@ Route::get('ingreso-productosl', 'ProductoslController@ingproductosl')->name('in
 Route::get('ingproductosl-create', 'ProductoslController@ingcreatel')->name('ingproductosl.create')->middleware('auth');
 Route::post('ingreso/productosl', 'ProductoslController@storeing');
 Route::get('ingreso-reversarl-{id}', 'ProductoslController@reversaring')->middleware('auth');
+Route::get('ingreso-recibo-{id}/{f1}/{f2}', 'ProductosController@recibo_ingreso')->middleware('auth');
+
 
 Route::get('salida-productos', 'ProductoslController@salida')->name('salida.index');
 Route::get('salida-create', 'ProductoslController@salidacreate')->name('salida.create')->middleware('auth');

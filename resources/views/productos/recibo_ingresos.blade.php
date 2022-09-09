@@ -48,23 +48,7 @@
 
 <div>
 	<div class="text-center title-header col-12">
-		<center><strong>REPORTE DETALLADO DE PRODUCTOS USADOS</strong> </center>
-		@if($productosi->almacen == 7)
-		<center><strong>CANTO REY</strong> </center>
-		@elseif($productosi->almacen == 8)
-		<center><strong>VIDA FELIZ</strong> </center>
-		@elseif($productosi->almacen == 2)
-		<center><strong>RECEPCIÒN</strong> </center>
-		@elseif($productosi->almacen == 3)
-		<center><strong>OBSTETRA</strong> </center>
-		@elseif($productosi->almacen == 4)
-		<center><strong>RAYOS X</strong> </center>
-		@elseif($productosi->almacen == 9)
-		<center><strong>ZARATE</strong> </center>
-		@elseif($productosi->almacen == 11)
-		<center><strong>LABORATORIO</strong> </center>
-		@else
-		@endif
+		<center><strong>REPORTE DETALLADO DE INGRESOS A ALMACEN CENTRAL</strong> </center>
 
 	</div>
 </div>
@@ -96,14 +80,14 @@
 		
 
 		</tr>
-		@foreach($productos as $ingreso)
+		@foreach($ingresos as $ingreso)
 		<tr>
 		    <td style="padding: 0;width: 5%;text-overflow: ellipsis;"> {{ $ingreso->created_at }}</td>
 			<td style="padding: 0;width: 15%;text-overflow: ellipsis;">{{ $ingreso->nompro }}</td>
             <td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->medida }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->cantidad }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->precio }}</td>
-			<td style="padding: 0;width: 10%;text-overflow: ellipsis;">{{ $ingreso->user }}</td>
+			<td style="padding: 0;width: 10%;text-overflow: ellipsis;">{{ $ingreso->nombre_usuario }}</td>
 
 		
 			
@@ -111,8 +95,8 @@
 		@endforeach
 	</table>
 
-    <strong>CANTIDAD TOTAL:</strong>{{ $productosi->cant }}<br>
-    <strong>TOTAL SOLES:</strong> {{number_format((float)$productosi->preciototal, 2, '.', '')}}<br>
+    <strong>CANTIDAD TOTAL:</strong>{{ $fin->cant }}<br>
+    <strong>TOTAL SOLES:</strong>{{ $fin->preciototal }}<br>
 
 </div>
 <br>

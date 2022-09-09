@@ -109,13 +109,11 @@
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>N° Factura</th>
+                    <th>Factura</th>
                     <th>F.Factura</th>
                     <th>Producto</th>
                     <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Vencimiento</th>
-                    <th>Monto</th>
+                    <th>Cant.Total</th>
                     <th>Obs.</th>
                     <th>Creación</th>
                     <th>Acciones</th>
@@ -127,15 +125,18 @@
                   <tr>
                     <td><span class="badge bg-success">{{$i->factura}}</span></td>
                     <td>{{$i->fecha}}</td>
-                    <td>{{$i->producto}}</td>
+                    <td>{{$i->nompro}}</td>
                     <td>{{$i->medida}}</td>
-                    <td>{{$i->cantidad}}</td>
-                    <td>{{$i->vence}}</td>
-                    <td>{{$i->precio}}</td>
+                    <td>{{$i->cant}}</td>
                     <td>{{$i->observacion}}</td>
                     <td>{{$i->created_at}}</td>
                     <td>
                     @if(Auth::user()->rol == 1)
+                    <a class="btn btn-success btn-sm" target="_blank" href="ingreso-recibo-{{$i->producto}}/{{$f1}}/{{$f2}}">
+                              <i class="fas fa-print">
+                              </i>
+                              Recibo
+                          </a>
                     <a class="btn btn-primary btn-sm" href="ingresop-edit-{{$i->id}}">
                               <i class="fas fa-edit">
                               </i>
@@ -159,13 +160,11 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>N° Factura</th>
+                    <th>Factura</th>
                     <th>F.Factura</th>
                     <th>Producto</th>
                     <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Vencimiento</th>
-                    <th>Monto</th>
+                    <th>Cant.Total</th>
                     <th>Obs.</th>
                     <th>Creación</th>
                     <th>Acciones</th>
