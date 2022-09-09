@@ -70,22 +70,24 @@
 <div style="background: #eaeaea;">
 	<table>
 		<tr>
-			<th style="padding: 0;width: 20%;text-overflow: ellipsis;">PRODUCTO</th>
+		    <th style="padding: 0;width: 5%;text-overflow: ellipsis;">FECHA</th>
+			<th style="padding: 0;width: 15%;text-overflow: ellipsis;">PRODUCTO</th>
             <th style="padding: 0;width: 5%;text-overflow: ellipsis;">MEDIDA</th>
-			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">CANT</th>
+			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">CANT</th>
 			<th style="padding: 0;width: 5%;text-overflow: ellipsis;">PRECIO</th>
-            <th style="padding: 0;width: 5%;text-overflow: ellipsis;">FECHA</th>
+			<th style="padding: 0;width: 10%;text-overflow: ellipsis;">USUARIO</th>
 
 		
 
 		</tr>
 		@foreach($productos as $ingreso)
 		<tr>
-			<td style="padding: 0;width: 20%;text-overflow: ellipsis;">{{ $ingreso->nompro }}</td>
+		    <td style="padding: 0;width: 5%;text-overflow: ellipsis;"> {{ $ingreso->created_at }}</td>
+			<td style="padding: 0;width: 15%;text-overflow: ellipsis;">{{ $ingreso->nompro }}</td>
             <td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->medida }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->cantidad }}</td>
 			<td style="padding: 0;width: 5%;text-overflow: ellipsis;">{{ $ingreso->precio }}</td>
-            <td style="padding: 0;width: 5%;text-overflow: ellipsis;"> {{ $ingreso->created_at }}</td>
+			<td style="padding: 0;width: 10%;text-overflow: ellipsis;">{{ $ingreso->user }}</td>
 
 		
 			
