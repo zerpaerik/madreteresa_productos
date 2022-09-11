@@ -133,6 +133,8 @@ Route::post('pacientes/edit', 'PacientesController@update');
 
 Route::get('productos_usados', 'ProductosUsadosController@index')->name('productosu.index');
 Route::get('productos_usados1', 'ProductosUsadosController@index1')->name('productosu.index1');
+//Route::get('productos_usados_detail-{p}/{f1}/{f2}/{al}', 'ProductosUsadosController@indexd')->name('productosu_d.index');
+Route::get('productos_usados_detail-{p}-{a}-{f1}', 'ProductosUsadosController@indexd')->name('productosu_d.index');
 Route::get('productos-usados-creater', 'ProductosUsadosController@creater')->name('productosu.creater')->middleware('auth');
 Route::get('productos-usados-createl', 'ProductosUsadosController@createl')->name('productosu.createl')->middleware('auth');
 Route::get('productos-usados-createo', 'ProductosUsadosController@createo')->name('productosu.createo')->middleware('auth');
@@ -280,6 +282,7 @@ Route::post('salida/productosl', 'ProductoslController@storesal');
 Route::get('salida-reversarl-{id}', 'ProductoslController@reversarsal')->middleware('auth');
 
 Route::get('ingreso-productos', 'ProductosController@ingproductos')->name('ingproductos.index');
+Route::get('ingreso-productos-detail-{id}/{f1}/{f2}/{a}', 'ProductosController@ingproductos_detail')->name('ingproductosd.index');
 Route::get('ingproductos-create', 'ProductosController@ingcreate')->name('ingproductos.create')->middleware('auth');
 Route::post('ingreso/productos', 'ProductosController@storeing');
 Route::get('ingreso-reversar-{id}', 'ProductosController@reversar')->middleware('auth');

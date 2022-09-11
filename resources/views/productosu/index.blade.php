@@ -240,10 +240,10 @@
                     @if(Auth::user()->rol == 1)
 
                          
-                          <a class="btn btn-danger btn-sm" href="productos-usados-reversar-{{$an->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
-                              <i class="fas fa-trash">
+                    <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_detail-{{$an->producto}}-{{$an->almacen}}-{{$f1}}">
+                              <i class="fas fa-eye">
                               </i>
-                              Reversar
+                              Detalle
                           </a>
 
                        

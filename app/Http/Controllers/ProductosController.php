@@ -69,6 +69,24 @@ class ProductosController extends Controller
         return view('productos.ingresos', compact('ingresos','f1','f2'));
     } 
 
+    public function ingproductos_detail($producto,$f1,$f2,$al)
+    {
+
+      
+
+        $ingresos = DB::table('ingresos_detalle as a')
+        ->select('a.id','a.producto','a.ingreso','a.vence','a.estatus','a.usuario_elimina','a.cantidad','a.precio','i.created_at','i.usuario','i.factura','i.fecha','i.observacion','u.name as usuario','p.nombre as nompro', 'p.medida','a.producto as product')
+        ->join('ingresos as i','i.id','a.ingreso')
+        ->join('productos as p','p.id','a.producto')
+        ->join('users as u','u.id','i.usuario')
+        ->whereBetween('a.created_at', [$f1, $f2])
+        ->where('a.producto','=',$producto)
+        ->get();
+
+
+        return view('productos.ingresos_detalle', compact('ingresos','f1','f2'));
+    } 
+
     public function recibo_ingreso($producto,$f1,$f2)
     {
 

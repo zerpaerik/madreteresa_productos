@@ -238,11 +238,7 @@ class ProductosUsadosController extends Controller
         ->groupBy('a.producto')
         ->get(); 
 
-        foreach ($productos as $key => $value) {
-            $item += 1;
-            $desp += $value->cantidad;
-            $total += $value->cantidad * $value->precio;
-        }
+       
 
         $soli = ProductosUsados::whereBetween('created_at',  [$f1, $f2])
         ->where('almacen','=',$almacen)
@@ -297,6 +293,33 @@ class ProductosUsadosController extends Controller
         return view('productosu.index1', compact('productos','f1', 'f2','soli','productosg','item','desp','total'));
         //
     }
+
+    public function indexd($p,$a,$f1/*$p, $f1, $f2, $a*/)
+    {
+
+
+      
+
+
+        $productos = DB::table('productos_usados as a')
+        ->select('a.id','a.producto','a.eliminado_por','a.estatus','a.fecha','a.precio','a.cantidad','a.created_at','a.usuario','u.nombre as nompro','u.categoria','u.medida','a.almacen','us.name as user')
+        ->join('productos as u','u.id','a.producto')
+        ->join('users as us','us.id','a.usuario')
+         ->whereBetween('a.created_at', [$f1, $f1])
+        ->where('a.almacen','=',$a)
+        ->where('a.producto','=',$p)
+        ->orderBy('a.created_at','DESC')
+        ->get(); 
+        
+
+       
+
+
+        return view('productosu.indexd', compact('productos'));
+        //
+    }
+
+
 
     public function ingproductos(Request $request)
     {

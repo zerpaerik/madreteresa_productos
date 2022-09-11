@@ -10,9 +10,6 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
-
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
@@ -27,13 +24,14 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
-
-
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
 <!-- DataTables -->
 <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -59,12 +57,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Productos Usados</h1>
+            <h1 class="m-0 text-dark">Ingreso de Productos</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Productos Usados</li>
+              <li class="breadcrumb-item active">Ingreso de Productos</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -73,120 +71,102 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">   
+    <section class="content">
     @include('flash-message')
 
       <div class="container-fluid">
       <div class="card">
               <div class="card-header">
-               
-                          <form method="get" action="productos_usados1">					
+                <a class="btn btn-primary btn-sm" href="{{route('ingproductos.create')}}">
+                              <i class="fas fa-folder">
+                              </i>
+                              Agregar
+                          </a>
+                          <form method="get" action="ingreso-productos">					
+                  <label for="exampleInputEmail1">Filtros de Busqueda</label>
 
-                            <div class="row">
-                            <div class="col-md-3">
-                            <label for="exampleInputEmail1">Inicio</label>
-                            <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
-                            </div>
-                            <div class="col-md-3">
-                            <label for="exampleInputEmail1">Fin</label>
-                            <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
-                            </div>
-                            <div class="col-md-2" style="margin-top: 30px;">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
+                    <div class="row">
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1">Fecha Inicio</label>
+                    <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni" onsubmit="datapac()">
+                  </div>
 
-                            </div>
-                            <div class="col-md-2">
-                            <label for="exampleInputEmail1">Items</label>
-                            <input type="text" disabled class="form-control" value="{{$item}}" >
-                            </div>
-                            <div class="col-md-2">
-                            <label for="exampleInputEmail1">Cantidad</label>
-                            <input type="text" disabled class="form-control" value="{{$desp}}" >
-                            </div>
-                            <div class="col-md-2">
-                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
-                              <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
-                            </div>
+                  <div class="col-md-3">
+                    <label for="exampleInputEmail1">Fecha Fin</label>
+                    <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni" onsubmit="datapac()">
+                  </div>
+                  
+                
+                 
+                  <div class="col-md-2" style="margin-top: 30px;">
+                  <button type="submit" class="btn btn-primary">Buscar</button>
 
-
-
-                            </form>
-                                                      
+                  </div>
+                  </form>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Producto</th>
+                    <th>Factura</th>
+                    <th>F.Factura</th>
+                    <th>Producto</th>
                     <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
-                    <th>Fecha</th>
-                    <th>Registrado Por</th>
+                    <th>Cant.Total</th>
+                    <th>Obs.</th>
+                    <th>Creación</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
 
-                  @foreach($productos as $an)
+                  @foreach($ingresos as $i)
                   <tr>
-                    <td>{{$an->nompro}}</td>
-                    <td>{{$an->medida}}</td>
-                    <td>{{$an->cant}}</td>
-                    <td>{{number_format((float)$an->preciototal, 2, '.', '')}}</td>
-                    <td>{{$an->fecha}}</td>
-                    @if($an->almacen == 7)
-                    <td>Canto Rey</td>
-                    @elseif($an->almacen == 8)
-                    <td>Vida Feliz</td>
-                    @else
-                    <td>Zarate</td>
-                    @endif
-                    <td>{{$an->created_at}}</td>
-                    <td>{{$an->user}}</td>
+                    <td><span class="badge bg-success">{{$i->factura}}</span></td>
+                    <td>{{$i->fecha}}</td>
+                    <td>{{$i->nompro}}</td>
+                    <td>{{$i->medida}}</td>
+                    <td>{{$i->cant}}</td>
+                    <td>{{$i->observacion}}</td>
+                    <td>{{$i->created_at}}</td>
                     <td>
-                    @if($an->estatus == 1)
                     @if(Auth::user()->rol == 1)
-
-                         
-                    
-
-                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_detail-{{$an->producto}}-{{$an->almacen}}-{{$f1}}">
-                              <i class="fas fa-eye">
+                    <a class="btn btn-success btn-sm" target="_blank" href="ingreso-recibo-{{$i->producto}}/{{$f1}}/{{$f2}}">
+                              <i class="fas fa-print">
                               </i>
-                              Detalle
+                              Recibo
                           </a>
-
-                       
-                          @endif
+                    <a class="btn btn-primary btn-sm" href="ingresop-edit-{{$i->id}}">
+                              <i class="fas fa-edit">
+                              </i>
+                              Editar
+                          </a>
+                        @if($i->estatus == 1)
+                          <a class="btn btn-danger btn-sm" href="ingreso-reversar-{{$i->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
+                              <i class="fas fa-backward">
+                              </i>
+                              Reversar
+                          </a>
                           @else
                           <span class="badge bg-success">Reversado por:</span>
-                          <span class="badge bg-success">{{$an->eliminado_por}}</span>
+                          <span class="badge bg-success">{{$i->usuario_elimina}}</span>
 
                           @endif
-                          </td>
-                          
+                    @endif</td>
                   </tr>
                   @endforeach
-                 
-                 
-               
-                 
                  
                   </tbody>
                   <tfoot>
                   <tr>
-                  <th>Producto</th>
+                    <th>Factura</th>
+                    <th>F.Factura</th>
+                    <th>Producto</th>
                     <th>Medida</th>
-                    <th>Cantidad</th>
-                    <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
-                    <th>Fecha</th>
-                    <th>Registrado Por</th>
+                    <th>Cant.Total</th>
+                    <th>Obs.</th>
+                    <th>Creación</th>
                     <th>Acciones</th>
                   </tr>
                   </tfoot>
@@ -201,6 +181,29 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Detalle de Ingreso de Productos</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+     
     </section>
     <!-- /.content -->
   </div>
@@ -219,6 +222,26 @@
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function view(e){
+        var id = $(e).attr('data-id');
+        
+        $.ajax({
+            type: "GET",
+            url: "ingresos/view/"+id,
+            success: function (data) {
+                $(".modal-body").html(data);
+                $('#myModal').modal('show');
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    };
+
+</script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -265,10 +288,12 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 <!-- AdminLTE App -->
+<!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- page script -->
+
 <script>
 
 $(document).ready(function() {
@@ -280,27 +305,6 @@ $(document).ready(function() {
     } );
 } );
 </script>
-
-<script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true,
-      "autoWidth": false,
-      dom: 'Bfrtip',
-      buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
 </script>
 </body>
 </html>

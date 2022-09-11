@@ -59,7 +59,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Productos Usados</h1>
+            <h1 class="m-0 text-dark">Detalle de Productos Usados</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -78,53 +78,18 @@
 
       <div class="container-fluid">
       <div class="card">
-              <div class="card-header">
-               
-                          <form method="get" action="productos_usados1">					
-
-                            <div class="row">
-                            <div class="col-md-3">
-                            <label for="exampleInputEmail1">Inicio</label>
-                            <input type="date" class="form-control" value="{{$f1}}" name="inicio" placeholder="Buscar por dni">
-                            </div>
-                            <div class="col-md-3">
-                            <label for="exampleInputEmail1">Fin</label>
-                            <input type="date" class="form-control" value="{{$f2}}" name="fin" placeholder="Buscar por dni">
-                            </div>
-                            <div class="col-md-2" style="margin-top: 30px;">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-
-                            </div>
-                            <div class="col-md-2">
-                            <label for="exampleInputEmail1">Items</label>
-                            <input type="text" disabled class="form-control" value="{{$item}}" >
-                            </div>
-                            <div class="col-md-2">
-                            <label for="exampleInputEmail1">Cantidad</label>
-                            <input type="text" disabled class="form-control" value="{{$desp}}" >
-                            </div>
-                            <div class="col-md-2">
-                              <label for="exampleInputEmail1">Cantidad Total Soles</label>
-                              <input type="text" disabled class="form-control" value="{{number_format((float)$total, 2, '.', '')}}" >
-                            </div>
-
-
-
-                            </form>
-                                                      
-              </div>
+             
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                  <th>Fecha</th>
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
                     <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
-                    <th>Fecha</th>
                     <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
@@ -133,32 +98,25 @@
 
                   @foreach($productos as $an)
                   <tr>
+                  <td>{{$an->created_at}}</td>
                     <td>{{$an->nompro}}</td>
                     <td>{{$an->medida}}</td>
-                    <td>{{$an->cant}}</td>
-                    <td>{{number_format((float)$an->preciototal, 2, '.', '')}}</td>
-                    <td>{{$an->fecha}}</td>
-                    @if($an->almacen == 7)
-                    <td>Canto Rey</td>
-                    @elseif($an->almacen == 8)
-                    <td>Vida Feliz</td>
-                    @else
-                    <td>Zarate</td>
-                    @endif
-                    <td>{{$an->created_at}}</td>
+                    <td>{{$an->cantidad}}</td>
+                    <td>{{number_format((float)$an->precio, 2, '.', '')}}</td>
+                    <td>{{number_format((float)$an->precio * $an->cantidad, 2, '.', '')}}</td>
                     <td>{{$an->user}}</td>
                     <td>
                     @if($an->estatus == 1)
                     @if(Auth::user()->rol == 1)
 
                          
-                    
-
-                          <a class="btn btn-success btn-sm" target="_blank" href="productos_usados_detail-{{$an->producto}}-{{$an->almacen}}-{{$f1}}">
-                              <i class="fas fa-eye">
+                          <a class="btn btn-danger btn-sm" href="productos-usados-reversar-{{$an->id}}" onclick="return confirm('¿Desea Reversar este registro?')">
+                              <i class="fas fa-trash">
                               </i>
-                              Detalle
+                              Reversar
                           </a>
+
+                     
 
                        
                           @endif
@@ -179,13 +137,12 @@
                   </tbody>
                   <tfoot>
                   <tr>
+                  <th>Fecha</th>
                   <th>Producto</th>
                     <th>Medida</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
                     <th>Total Soles</th>
-                    <th>Fecha Descarga</th>
-                    <th>Almacen</th>
-                    <th>Fecha</th>
                     <th>Registrado Por</th>
                     <th>Acciones</th>
                   </tr>
